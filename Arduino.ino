@@ -172,29 +172,22 @@ void desceCaneta(){
 
 //Inicio x = 0,y=0
 void desenhaVelha(){
+  
   sobeCaneta();
   cima(950);
   delay(500);
 
-//  Serial.print("Posicao padrao 1: ");
-//  Serial.print(posCaneta);
-//  Serial.println();
   desceCaneta();
   delay(300);
   direita(900);
   delay(500);
-//  Serial.print("Descida 1: ");
-//  Serial.print(posCaneta);
-//  Serial.println();
   
   sobeCaneta();
+  delay(300);
   cima(300);
   delay(500);
   
   desceCaneta();
-//   Serial.print("Descida 2: ");
-//  Serial.print(posCaneta);
-//  Serial.println();
   delay(300);
   esquerda(900);
   delay(500);
@@ -206,14 +199,12 @@ void desenhaVelha(){
   delay(500);
 
   desceCaneta();
-//    /  Serial.print("Descida 3: ");
-//  /Serial.print(posCaneta);
-//  /Serial.println();
   delay(300);
   baixo(900);
   delay(500);
 
   sobeCaneta();
+  delay(300);
   direita(300);
   delay(500);
 
@@ -368,6 +359,150 @@ void voltaPosicao33()
   delay(500);
 }
 
+void venceuColuna1()
+{
+  sobeCaneta();
+  delay(300);
+  cima(1550);
+  direita(150);
+
+  delay(300);
+  desceCaneta();
+  delay(300);
+  baixo(900);
+
+  sobeCaneta();
+  delay(300);
+  esquerda(150);
+  baixo(650);
+    
+}
+
+void venceuColuna2()
+{
+  sobeCaneta();
+  delay(300);
+  cima(1550);
+  direita(450);
+
+  delay(300);
+  desceCaneta();
+  delay(300);
+  baixo(900);
+
+  sobeCaneta();
+  delay(300);
+  esquerda(450);
+  delay(300);
+  baixo(650);
+}
+
+void venceuColuna3()
+{
+  sobeCaneta();
+  delay(300);
+  cima(1550);
+  direita(750);
+
+  delay(300);
+  desceCaneta();
+  delay(300);
+  baixo(900);
+
+  sobeCaneta();
+  delay(300);
+  esquerda(750);
+  baixo(650);
+}
+
+void venceuLinha1()
+{
+  sobeCaneta();
+  delay(300);
+  cima(800);
+  direita(900);
+
+  delay(300);
+  desceCaneta();
+  delay(300);
+  esquerda(900);
+
+  sobeCaneta();
+  delay(300);
+  baixo(800);
+}
+
+void venceuLinha2()
+{
+  sobeCaneta();
+  delay(300);
+  cima(1100);
+  direita(900);
+
+  delay(300);
+  desceCaneta();
+  delay(300);
+  esquerda(900);
+
+  sobeCaneta();
+  delay(300);
+  baixo(1100);  
+}
+
+void venceuLinha3()
+{
+  sobeCaneta();
+  delay(300);
+  cima(1400);
+  direita(900);
+
+  delay(300);
+  desceCaneta();
+  delay(300);
+  esquerda(900);
+
+  sobeCaneta();
+  delay(300);
+  baixo(1400);  
+}
+
+void venceuDiagonalEsquerdaCima()
+{
+  sobeCaneta();
+  delay(300);
+  cima(650);
+  direita(900);
+
+  delay(300);
+  desceCaneta();
+  delay(300);
+  diagonalCimaEsquerda(900);
+
+  sobeCaneta();
+  baixo(1600);
+  delay(300);
+
+}
+
+void venceuDiagonalDireitaCima()
+{
+   sobeCaneta();
+  delay(300);
+  cima(650);
+
+  delay(300);
+  desceCaneta();
+  delay(300);
+  diagonalCimaDireita(900);
+
+  sobeCaneta();
+  baixo(1600);
+  esquerda(900);
+  delay(300);
+}
+
+
+
 
 void desenhaX()
 {
@@ -377,23 +512,23 @@ void desenhaX()
       
       desceCaneta();
       diagonalBaixoDireita(141);
-      delay(1000);
+      delay(300);
       
       sobeCaneta();
       esquerda(141);
-      delay(1000);
+      delay(300);
 
       desceCaneta();
       diagonalCimaDireita(141);
-      delay(1000);
+      delay(300);
 
       sobeCaneta();
       esquerda(141);
-      delay(1000);
+      delay(300);
 
       
       cima(80);
-      delay(1000);
+      delay(300);
       esquerda(80);
       
 }
@@ -401,539 +536,29 @@ void desenhaX()
 void desenhaO()
 {
   sobeCaneta();
-  direita(150);   //indo para a posição inicial para desenhar o O
-  baixo(80);
-
 
   //primeiro quadrante
-  
+///  direita(300);
+  cima(300);
   desceCaneta();
   delay(200);
-  
-  direita(8);
-  delay(50);
-  baixo(1);
-  delay(50);
-  direita(6);
-  delay(50);
-  baixo(1);
-  direita(6);
-  delay(50);
-  baixo(1);
-  direita(3);
-  delay(50);
-  baixo(1);
-  direita(3);
-  delay(50);
-  baixo(1);
-  direita(2);
-  delay(50);
-  baixo(1);
-  direita(2);
-  delay(50);
-  baixo(1);
-  direita(3);
-  delay(50);
-  baixo(1);
-  direita(1);
-  delay(50);
-  baixo(1);
-  direita(2);
-  delay(50);
-  baixo(1);
-  direita(2);
-  delay(50);
-  baixo(1);
-  direita(1);
-  delay(50);
-  baixo(1);
-  direita(2);
-  delay(50);
-  baixo(1);
-  direita(1);
-  delay(50);
-  baixo(1);
-  direita(2);
-  delay(50);
-  baixo(1);
-  direita(1);
-  delay(50);
-  baixo(1);
-  direita(1);
-  delay(50);
-  baixo(1);
-  direita(1);
-  delay(50);
-  baixo(1);
-  direita(1);
-  delay(50);
-  baixo(1);
-  direita(1);
-  delay(50);
-  baixo(1);
-  direita(1);
-  delay(50);
-  baixo(1);
-  direita(1);
-  delay(50);
-  baixo(1);
-  direita(1);
-  delay(50);
-  baixo(1);
-  direita(1);
-  delay(50);
-  baixo(1);
-  direita(1);
-  delay(50);
-  baixo(1);
-  direita(1);
-  delay(50);
-  baixo(1);
-  direita(1);
-  delay(50);
-  baixo(1);   //13
-  direita(1);
-  delay(50);
-  baixo(2);
-  direita(1);
-  delay(50);
-  baixo(1);
-  direita(1);
-  delay(50);
-  baixo(2);
-  direita(1);
-  delay(50);
-  baixo(1);
-  direita(1);
-  delay(50);
-  baixo(2);
-  direita(1);
-  delay(50);
-  baixo(2);
-  direita(1);
-  delay(50);
-  baixo(1);
-  direita(1);
-  delay(50);
-  baixo(3);
-  direita(1);
-  delay(50);
-  baixo(2);
-  direita(1);
-  delay(50);
-  baixo(2);
-  direita(1);
-  delay(50);
-  baixo(3);
-  direita(1);
-  delay(50);
-  baixo(3);
-  direita(1);
-  delay(50);
-   baixo(5);
-  direita(1);
-  delay(50);
-  baixo(6);
-  direita(1);
-  delay(50);
-  baixo(16);
 
+  direita(70);
+  diagonalBaixoDireita(70);
+  baixo(70);
+  diagonalBaixoEsquerda(70);
+  esquerda(70);
+  diagonalCimaEsquerda(70);
+  cima(70);
+  diagonalCimaDireita(70);
 
-  // segundo quadrante
-  delay(50);
-  esquerda(1);
-  baixo(6);
-  delay(50);
-  esquerda(1);
-  baixo(5);
-  delay(50);
-  esquerda(1);
-  baixo(3);
-  delay(50);
-  esquerda(1);
-  baixo(3);
-  delay(50);
-  esquerda(1);
-  baixo(2);
-  delay(50);
-  esquerda(1);
-  baixo(2);
-  delay(50);
-  esquerda(1);
-  baixo(3);
-  delay(50);
-  esquerda(1);
-  baixo(1);
-  delay(50);
-  esquerda(1);
-  baixo(2);
-  delay(50);
-  esquerda(1);
-  baixo(2);
-  delay(50);
-  esquerda(1);
-  baixo(1);
-  delay(50);
-  esquerda(1);
-  baixo(2);
-  delay(50);
-  esquerda(1);
-  baixo(1);
-  delay(50);
-  esquerda(1);
-  baixo(2);
-  delay(50);
-  esquerda(1);
-  baixo(1);
-    delay(50);
-  esquerda(1);
-  baixo(1);
-    delay(50);
-  esquerda(1);
-  baixo(1);
-    delay(50);
-  esquerda(1);
-  baixo(1);
-    delay(50);
-  esquerda(1);
-  baixo(1);
-    delay(50);
-  esquerda(1);
-  baixo(1);
-    delay(50);
-  esquerda(1);
-  baixo(1);
-    delay(50);
-  esquerda(1);
-  baixo(1);
-    delay(50);
-  esquerda(1);
-  baixo(1);
-    delay(50);
-  esquerda(1);
-  baixo(1);
-    delay(50);
-  esquerda(1);
-  baixo(1);
-    delay(50);
-  esquerda(1);
-  baixo(1);
-  delay(50);
-  esquerda(1);
-  baixo(1);
-  delay(50);
-  esquerda(2);
-  baixo(1);
-  delay(50);
-  esquerda(1);
-  baixo(1);
-  delay(50);
-  esquerda(2);
-  baixo(1);
-  delay(50);
-  esquerda(1);
-  baixo(1);
-  delay(50);
-  esquerda(2);
-  baixo(1);
-  delay(50);
-  esquerda(2);
-  baixo(1);
-  delay(50);
-  esquerda(1);
-  baixo(1);
-  delay(50);
-  esquerda(3);
-  baixo(1);
-  delay(50);
-  esquerda(2);
-  baixo(1);
-  delay(50);
-  esquerda(2);
-  baixo(1);
-  delay(50);
-  esquerda(3);
-  baixo(1);
-  delay(50);
-  esquerda(3);
-  baixo(1);
-  delay(50);
-  esquerda(5);
-  baixo(1);
-  delay(50);
-  esquerda(6);
-  baixo(1);
-  delay(50);
-  esquerda(16);
-  
-
-  //terceiro quadrante
-  delay(50);
-  cima(1);
-  esquerda(6);
-  delay(50);
-  cima(1);
-  esquerda(5);
-  delay(50);
-  cima(1);
-  esquerda(3);
-  delay(50);
-  cima(1);
-  esquerda(3);
-  delay(50);
-  cima(1);
-  esquerda(2);
-  delay(50);
-  cima(1);
-  esquerda(2);
-  delay(50);
-  cima(1);
-  esquerda(3);
-  delay(50);
-  cima(1);
-  esquerda(1);
-  delay(50);
-  cima(1);
-  esquerda(2);
-  delay(50);
-  cima(1);
-  esquerda(2);
-  delay(50);
-  cima(1);
-  esquerda(1);
-  delay(50);
-  cima(1);
-  esquerda(2);
-  delay(50);
-  cima(1);
-  esquerda(1);
-  delay(50);
-  cima(1);
-  esquerda(2);
-  delay(50);
-  cima(1);
-  esquerda(1);
-    delay(50);
-  cima(1);
-  esquerda(1);
-    delay(50);
-  cima(1);
-  esquerda(1);
-    delay(50);
-  cima(1);
-  esquerda(1);
-    delay(50);
-  cima(1);
-  esquerda(1);
-    delay(50);
-  cima(1);
-  esquerda(1);
-    delay(50);
-  cima(1);
-  esquerda(1);
-    delay(50);
-  cima(1);
-  esquerda(1);
-    delay(50);
-  cima(1);
-  esquerda(1);
-    delay(50);
-  cima(1);
-  esquerda(1);
-    delay(50);
-  cima(1);
-  esquerda(1);
-    delay(50);
-  cima(1);
-  esquerda(1);
-  delay(50);
-  cima(1);
-  esquerda(1);
-  delay(50);
-  cima(2);
-  esquerda(1);
-  delay(50);
-  cima(1);
-  esquerda(1);
-  delay(50);
-  cima(2);
-  esquerda(1);
-  delay(50);
-  cima(1);
-  esquerda(1);
-  delay(50);
-  cima(2);
-  esquerda(1);
-  delay(50);
-  cima(2);
-  esquerda(1);
-  delay(50);
-  cima(1);
-  esquerda(1);
-  delay(50);
-  cima(3);
-  esquerda(1);
-  delay(50);
-  cima(2);
-  esquerda(1);
-  delay(50);
-  cima(2);
-  esquerda(1);
-  delay(50);
-  cima(3);
-  esquerda(1);
-  delay(50);
-  cima(3);
-  esquerda(1);
-  delay(50);
-  cima(5);
-  esquerda(1);
-  delay(50);
-  cima(6);
-  esquerda(1);
-  delay(50);
-  cima(16);
-
-  // quarto quadrante
-  delay(50);
-  direita(1);
-  cima(6);
-  delay(50);
-  direita(1);
-  cima(5);
-  delay(50);
-  direita(1);
-  cima(3);
-  delay(50);
-  direita(1);
-  cima(3);
-  delay(50);
-  direita(1);
-  cima(2);
-  delay(50);
-  direita(1);
-  cima(2);
-  delay(50);
-  direita(1);
-  cima(3);
-  delay(50);
-  direita(1);
-  cima(1);
-  delay(50);
-  direita(1);
-  cima(2);
-  delay(50);
-  direita(1);
-  cima(2);
-  delay(50);
-  direita(1);
-  cima(1);
-  delay(50);
-  direita(1);
-  cima(2);
-  delay(50);
-  direita(1);
-  cima(1);
-  delay(50);
-  direita(1);
-  cima(2);
-  delay(50);
-  direita(1);
-  cima(1);
-    delay(50);
-  direita(1);
-  cima(1);
-    delay(50);
-  direita(1);
-  cima(1);
-    delay(50);
-  direita(1);
-  cima(1);
-    delay(50);
-  direita(1);
-  cima(1);
-    delay(50);
-  direita(1);
-  cima(1);
-    delay(50);
-  direita(1);
-  cima(1);
-    delay(50);
-  direita(1);
-  cima(1);
-    delay(50);
-  direita(1);
-  cima(1);
-    delay(50);
-  direita(1);
-  cima(1);
-    delay(50);
-  direita(1);
-  cima(1);
-    delay(50);
-  direita(1);
-  cima(1);
-  delay(50);
-  direita(1);
-  cima(1);
-  delay(50);
-  direita(2);
-  cima(1);
-  delay(50);
-  direita(1);
-  cima(1);
-  delay(50);
-  direita(2);
-  cima(1);
-  delay(50);
-  direita(1);
-  cima(1);
-  delay(50);
-  direita(2);
-  cima(1);
-  delay(50);
-  direita(2);
-  cima(1);
-  delay(50);
-  direita(1);
-  cima(1);
-  delay(50);
-  direita(3);
-  cima(1);
-  delay(50);
-  direita(2);
-  cima(1);
-  delay(50);
-  direita(2);
-  cima(1);
-  delay(50);
-  direita(3);
-  cima(1);
-  delay(50);
-  direita(3);
-  cima(1);
-  delay(50);
-  direita(5);
-  cima(1);
-  delay(50);
-  direita(5);
-  cima(1);
-  delay(50);
-  direita(4);
-  cima(1);
-  delay(50);
-  direita(6);
-  cima(1);
-  delay(50);
-  direita(8);
 
   
   sobeCaneta();
-  esquerda(150);
-  cima(80);
   
   
 }
+
 
 void setup()
 {
@@ -961,27 +586,7 @@ void loop()
 //      Serial.print("Cima:");
 //      Serial.println(posCima);
 //    }
-//    if(incomingByte == 'd'){        //função pra ir pra direita de 10 em 10 passos
-//      direita(stps);
-//      delay(1000);
-//      posDireita += stps;
-//      Serial.print("Direita:");
-//      Serial.println(posDireita);
-//    }
-//    if(incomingByte == 'e'){       //função pra ir pra cima de 100 em 100 passos
-//      cima(stps*10);
-//      delay(1000);
-//      posCima += stps*10;
-//      Serial.print("Cima:");
-//      Serial.println(posCima);
-//    }
-//    if(incomingByte == 'f'){      //função pra ir pra direita de 100 em 100 passos
-//      direita(stps*10);
-//      delay(1000);
-//      posDireita += stps*10;
-//      Serial.print("Direita:");
-//      Serial.println(posDireita);
-//    }
+
     if(incomingByte == 'a'){      //função pra subir a caneta, girando o servo de 1 em 1
       if(posCaneta<40){
         posCaneta +=1;
@@ -1027,49 +632,593 @@ void loop()
       desenhaVelha();
     }
 
+    if(incomingByte == 'c'){      //teste de funções
+      venceuDiagonalDireitaCima();
+    }
+
     if(incomingByte == 'u'){
-      desenhaVelha();
+//     / desenhaVelha();
       
-      vaiPosicao31();
-      desenhaX();
-      voltaPosicao31();
+//      vaiPosicao31();
+//      desenhaX();
+//      voltaPosicao31();
+//      
+//      vaiPosicao32();
+//      desenhaX();
+//      voltaPosicao32();
+//      
+//      vaiPosicao33();
+//      desenhaX();
+//      voltaPosicao33();
+//      
+//      vaiPosicao21();
+//      desenhaX();
+//      voltaPosicao21();
+//      
+//      vaiPosicao22();
+//      desenhaX();
+//      voltaPosicao22();
+//      
+//      vaiPosicao23();
+//      desenhaX();
+//      voltaPosicao23();
+//      
+//      vaiPosicao11();
+//      desenhaX();
+//      voltaPosicao11();
+//      
+//      vaiPosicao12();
+//      desenhaX();
+//      voltaPosicao12();
+//      
+//      vaiPosicao13();
+//      desenhaX();
+//      voltaPosicao13();
+//
+//      venceuColuna1();
+//      venceuColuna2();
+//      venceuColuna3();
+//
+//      venceuLinha1();
+//      venceuLinha2();
+//      venceuLinha3();
+//
+      venceuDiagonalEsquerdaCima();
+      venceuDiagonalDireitaCima();
       
-      vaiPosicao32();
-      desenhaX();
-      voltaPosicao32();
-      
-      vaiPosicao33();
-      desenhaX();
-      voltaPosicao33();
-      
-      vaiPosicao21();
-      desenhaX();
-      voltaPosicao21();
-      
-      vaiPosicao22();
-      desenhaX();
-      voltaPosicao22();
-      
-      vaiPosicao23();
-      desenhaX();
-      voltaPosicao23();
-      
-      vaiPosicao11();
-      desenhaX();
-      voltaPosicao11();
-      
-      vaiPosicao12();
-      desenhaX();
-      voltaPosicao12();
-      
-      vaiPosicao13();
-      desenhaX();
-      voltaPosicao13();
 
     }
   }
 
 }
+
+//
+//direita(8);
+//  delay(70);
+//  baixo(1);
+//  delay(70);
+//  direita(6);
+//  delay(70);
+//  baixo(1);
+//  direita(6);
+//  delay(70);
+//  baixo(1);
+//  direita(3);
+//  delay(70);
+//  baixo(1);
+//  direita(3);
+//  delay(70);
+//  baixo(1);
+//  direita(2);
+//  delay(70);
+//  baixo(1);
+//  direita(2);
+//  delay(70);
+//  baixo(1);
+//  direita(3);
+//  delay(70);
+//  baixo(1);
+//  direita(1);
+//  delay(70);
+//  baixo(1);
+//  direita(2);
+//  delay(70);
+//  baixo(1);
+//  direita(2);
+//  delay(70);
+//  baixo(1);
+//  direita(1);
+//  delay(70);
+//  baixo(1);
+//  direita(2);
+//  delay(70);
+//  baixo(1);
+//  direita(1);
+//  delay(70);
+//  baixo(1);
+//  direita(2);
+//  delay(70);
+//  baixo(1);
+//  direita(1);
+//  delay(70);
+//  baixo(1);
+//  direita(1);
+//  delay(70);
+//  baixo(1);
+//  direita(1);
+//  delay(70);
+//  baixo(1);
+//  direita(1);
+//  delay(70);
+//  baixo(1);
+//  direita(1);
+//  delay(70);
+//  baixo(1);
+//  direita(1);
+//  delay(70);
+//  baixo(1);
+//  direita(1);
+//  delay(70);
+//  baixo(1);
+//  direita(1);
+//  delay(70);
+//  baixo(1);
+//  direita(1);
+//  delay(70);
+//  baixo(1);
+//  direita(1);
+//  delay(70);
+//  baixo(1);
+//  direita(1);
+//  delay(70);
+//  baixo(1);
+//  direita(1);
+//  delay(70);
+//  baixo(1);   //13
+//  direita(1);
+//  delay(70);
+//  baixo(2);
+//  direita(1);
+//  delay(70);
+//  baixo(1);
+//  direita(1);
+//  delay(70);
+//  baixo(2);
+//  direita(1);
+//  delay(70);
+//  baixo(1);
+//  direita(1);
+//  delay(70);
+//  baixo(2);
+//  direita(1);
+//  delay(70);
+//  baixo(2);
+//  direita(1);
+//  delay(70);
+//  baixo(1);
+//  direita(1);
+//  delay(70);
+//  baixo(3);
+//  direita(1);
+//  delay(70);
+//  baixo(2);
+//  direita(1);
+//  delay(70);
+//  baixo(2);
+//  direita(1);
+//  delay(70);
+//  baixo(3);
+//  direita(1);
+//  delay(70);
+//  baixo(3);
+//  direita(1);
+//  delay(70);
+//   baixo(5);
+//  direita(1);
+//  delay(70);
+//  baixo(6);
+//  direita(1);
+//  delay(70);
+//  baixo(8);
+//
+//  //segundo
+//
+//  delay(70);
+//  baixo(8);
+//  delay(70);
+//  esquerda(1);
+//  delay(70);
+//  baixo(6);
+//  delay(70);
+//  esquerda(1);
+//  baixo(6);
+//  delay(70);
+//  esquerda(1);
+//  baixo(3);
+//  delay(70);
+//  esquerda(1);
+//  baixo(3);
+//  delay(70);
+//  esquerda(1);
+//  baixo(2);
+//  delay(70);
+//  esquerda(1);
+//  baixo(2);
+//  delay(70);
+//  esquerda(1);
+//  baixo(3);
+//  delay(70);
+//  esquerda(1);
+//  baixo(1);
+//  delay(70);
+//  esquerda(1);
+//  baixo(2);
+//  delay(70);
+//  esquerda(1);
+//  baixo(2);
+//  delay(70);
+//  esquerda(1);
+//  baixo(1);
+//  delay(70);
+//  esquerda(1);
+//  baixo(2);
+//  delay(70);
+//  esquerda(1);
+//  baixo(1);
+//  delay(70);
+//  esquerda(1);
+//  baixo(2);
+//  delay(70);
+//  esquerda(1);
+//  baixo(1);
+//  delay(70);
+//  esquerda(1);
+//  baixo(1);
+//  delay(70);
+//  esquerda(1);
+//  baixo(1);
+//  delay(70);
+//  esquerda(1);
+//  baixo(1);
+//  delay(70);
+//  esquerda(1);
+//  baixo(1);
+//  delay(70);
+//  esquerda(1);
+//  baixo(1);
+//  delay(70);
+//  esquerda(1);
+//  baixo(1);
+//  delay(70);
+//  esquerda(1);
+//  baixo(1);
+//  delay(70);
+//  esquerda(1);
+//  baixo(1);
+//  delay(70);
+//  esquerda(1);
+//  baixo(1);
+//  delay(70);
+//  esquerda(1);
+//  baixo(1);
+//  delay(70);
+//  esquerda(1);
+//  baixo(1);
+//  delay(70);
+//  esquerda(1);   //13
+//  baixo(1);
+//  delay(70);
+//  esquerda(2);
+//  baixo(1);
+//  delay(70);
+//  esquerda(1);
+//  baixo(1);
+//  delay(70);
+//  esquerda(2);
+//  baixo(1);
+//  delay(70);
+//  esquerda(1);
+//  baixo(1);
+//  delay(70);
+//  esquerda(2);
+//  baixo(1);
+//  delay(70);
+//  esquerda(2);
+//  baixo(1);
+//  delay(70);
+//  esquerda(1);
+//  baixo(1);
+//  delay(70);
+//  esquerda(3);
+//  baixo(1);
+//  delay(70);
+//  esquerda(2);
+//  baixo(1);
+//  delay(70);
+//  esquerda(2);
+//  baixo(1);
+//  delay(70);
+//  esquerda(3);
+//  baixo(1);
+//  delay(70);
+//  esquerda(3);
+//  baixo(1);
+//  delay(70);
+//   esquerda(5);
+//  baixo(1);
+//  delay(70);
+//  esquerda(6);
+//  baixo(1);
+//  delay(70);
+//  esquerda(8);
+//
+//
+//  //terceiro quadrante
+//  delay(70);
+//  esquerda(8);
+//  delay(70);
+//  cima(1);
+//  delay(70);
+//  esquerda(6);
+//  delay(70);
+//  cima(1);
+//  esquerda(6);
+//  delay(70);
+//  cima(1);
+//  esquerda(3);
+//  delay(70);
+//  cima(1);
+//  esquerda(3);
+//  delay(70);
+//  cima(1);
+//  esquerda(2);
+//  delay(70);
+//  cima(1);
+//  esquerda(2);
+//  delay(70);
+//  cima(1);
+//  esquerda(3);
+//  delay(70);
+//  cima(1);
+//  esquerda(1);
+//  delay(70);
+//  cima(1);
+//  esquerda(2);
+//  delay(70);
+//  cima(1);
+//  esquerda(2);
+//  delay(70);
+//  cima(1);
+//  esquerda(1);
+//  delay(70);
+//  cima(1);
+//  esquerda(2);
+//  delay(70);
+//  cima(1);
+//  esquerda(1);
+//  delay(70);
+//  cima(1);
+//  esquerda(2);
+//  delay(70);
+//  cima(1);
+//  esquerda(1);
+//  delay(70);
+//  cima(1);
+//  esquerda(1);
+//  delay(70);
+//  cima(1);
+//  esquerda(1);
+//  delay(70);
+//  cima(1);
+//  esquerda(1);
+//  delay(70);
+//  cima(1);
+//  esquerda(1);
+//  delay(70);
+//  cima(1);
+//  esquerda(1);
+//  delay(70);
+//  cima(1);
+//  esquerda(1);
+//  delay(70);
+//  cima(1);
+//  esquerda(1);
+//  delay(70);
+//  cima(1);
+//  esquerda(1);
+//  delay(70);
+//  cima(1);
+//  esquerda(1);
+//  delay(70);
+//  cima(1);
+//  esquerda(1);
+//  delay(70);
+//  cima(1);
+//  esquerda(1);
+//  delay(70);
+//  cima(1);   //13
+//  esquerda(1);
+//  delay(70);
+//  cima(2);
+//  esquerda(1);
+//  delay(70);
+//  cima(1);
+//  esquerda(1);
+//  delay(70);
+//  cima(2);
+//  esquerda(1);
+//  delay(70);
+//  cima(1);
+//  esquerda(1);
+//  delay(70);
+//  cima(2);
+//  esquerda(1);
+//  delay(70);
+//  cima(2);
+//  esquerda(1);
+//  delay(70);
+//  cima(1);
+//  esquerda(1);
+//  delay(70);
+//  cima(3);
+//  esquerda(1);
+//  delay(70);
+//  cima(2);
+//  esquerda(1);
+//  delay(70);
+//  cima(2);
+//  esquerda(1);
+//  delay(70);
+//  cima(3);
+//  esquerda(1);
+//  delay(70);
+//  cima(3);
+//  esquerda(1);
+//  delay(70);
+//   cima(5);
+//  esquerda(1);
+//  delay(70);
+//  cima(6);
+//  esquerda(1);
+//  delay(70);
+//  cima(8);
+//
+//  //quarto
+//
+//  delay(70);
+//  cima(8);
+//  direita(1);
+//  delay(70);
+//  cima(7);
+//  direita(1);
+//  delay(70);
+//  cima(5);
+//  direita(1);
+//  delay(70);
+//  cima(3);
+//  direita(1);
+//  delay(70);
+//  cima(3);
+//  direita(1);
+//  delay(70);
+//  cima(2);
+//  direita(1);
+//  delay(70);
+//  cima(2);
+//  direita(1);
+//  delay(70);
+//  cima(3);
+//  direita(1);
+//  delay(70);
+//  cima(1);
+//  direita(1);
+//  delay(70);
+//  cima(2);
+//  direita(1);
+//  delay(70);
+//  cima(2);
+//  direita(1);
+//  delay(70);
+//  cima(1);
+//  direita(1);
+//  delay(70);
+//  cima(2);
+//  direita(1);
+//  delay(70);
+//  cima(1);
+//  direita(1);
+//  delay(70);
+//  cima(2);
+//  direita(1);
+//  delay(70);
+//  cima(1);
+//  direita(1);
+//  delay(70);
+//  cima(1);
+//  direita(1);
+//  delay(70);
+//  cima(1);
+//  direita(1);
+//  delay(70);
+//  cima(1);
+//  direita(1);
+//  delay(70);
+//  cima(1);
+//  direita(1);
+//  delay(70);
+//  cima(1);
+//  direita(1);
+//  delay(70);
+//  cima(1);
+//  direita(1);
+//  delay(70);
+//  cima(1);
+//  direita(1);
+//  delay(70);
+//  cima(1);
+//  direita(1);
+//  delay(70);
+//  cima(1);
+//  direita(1);
+//  delay(70);
+//  cima(1);
+//  direita(1);
+//  delay(70);
+//  cima(1);
+//  direita(1);
+//  delay(70);
+//  cima(1);
+//  direita(1);
+//  delay(70);
+//  cima(1);
+//  direita(2);
+//  delay(70);
+//  cima(1);
+//  direita(1);
+//  delay(70);
+//  cima(1);
+//  direita(2);
+//  delay(70);
+//  cima(1);
+//  direita(1);
+//  delay(70);
+//  cima(1);
+//  direita(2);
+//  delay(70);
+//  cima(1);
+//  direita(2);
+//  delay(70);
+//  cima(1);
+//  direita(1);
+//  delay(70);
+//  cima(1);
+//  direita(3);
+//  delay(70);
+//  cima(1);
+//  direita(2);
+//  delay(70);
+//  cima(1);
+//  direita(1);
+//  delay(70);
+//  cima(1);
+//  direita(2);
+//  delay(70);
+//  cima(1);
+//  direita(3);
+//  delay(70);
+//  cima(1);
+//  direita(3);
+//  delay(70);
+//  cima(1);
+//  direita(5);
+//  delay(70);
+//  cima(1);
+//  direita(6);
+//  delay(70);
+//  cima(1);
+//  direita(8);
+//  delay(70);
+
 
 //altura -> 2200 passos
 //largura -> 1000 passos
