@@ -133,35 +133,90 @@ def corta_corta(pontos_quadrado):
      # cv2.imshow("final",croped_image_final)
      # cv2.waitKey(0)
      
-    
-img = cv2.imread("webcam_dia_1.jpg")
-cv2.imshow("imagem_normal", img)
-img_processada = process(img)
-cv2.imshow("imagem_processada", img_processada)
-# cv2.waitKey(0)
+def corta_corta_depois(pontos_quadrado):
 
-contours, _ = cv2.findContours(img_processada, cv2.RETR_LIST, cv2.CHAIN_APPROX_NONE) #talvez usar o CHAIN_APPROX_SIMPLE, ver a diferenca em https://docs.opencv.org/4.x/d4/d73/tutorial_py_contours_begin.html
+     # https://stackoverflow.com/questions/48301186/cropping-concave-polygon-from-image-using-opencv-python
 
-# contornos_desenhados = cv2.drawContours(img, contours, -1, (0,255,0), 3)
-# cv2.imshow("contornos desenhados", contornos_desenhados)
-# cv2.waitKey(0)
+     # criando um retangulo com os vertices
+     rect_corte = cv2.boundingRect(pontos_quadrado)
+     # passando as coordenadas para as variaveis
+     x,y,w,h = rect_corte
+     # cortando a imagem com as variaveis
+     croped = img_processada_com_x[y:y+h, x:x+w].copy()
 
-# o inner sao os pontos do quadrado do meio
-# o outter sao os pontos do octagno externo
+     # fazendo mascara para o corte da imagem
+     pontos_quadrado = pontos_quadrado - pontos_quadrado.min(axis=0)
+     mask = np.zeros(croped.shape[:2], np.uint8)
+     # desenhando os contornos usando a mascara
+     cv2.drawContours(mask, [pontos_quadrado], -1, (255, 255, 255), -1, cv2.LINE_AA)
 
-inner, outer = sorted(map(convex_hull, contours), key=len)
+     # fazendo comparacao da imagem cortada com a mascara
+     croped_image_final = cv2.bitwise_and(croped, croped, mask=mask)
+     return croped_image_final
+     # cv2.imshow("final",croped_image_final)
+     # cv2.waitKey(0)
+     
+for l in range(0,22):
+     # cam_port = 2
+     # cam = cv2.VideoCapture(cam_port) 
 
-lista_quadrados = quadraders(inner,outer)
+     # # reading the input using the camera 
+     # result, image = cam.read() 
 
-for i in range(0,9):
-     k=i+1
-     if(k%3==0):
-          j=3
-     else:
-          j=k%3
-     k=int(i/3)+1
-     lista_imagens_cortadas = corta_corta(np.array(lista_quadrados[i]))
-     cv2.imwrite(f"imagem_cortada_{k}{j}.png",lista_imagens_cortadas)
+     # # If image will detected without any error,  
+     # # show result 
+     # if result: 
+
+     #      # saving image in local storage 
+     #      cv2.imwrite(f"Imagem{l}X.png", image) 
+     
+            
+     img = cv2.imread("tabuleiro_vazio.jpg")
+     cv2.imshow("imagem_normal", img)
+     img_processada = process(img)
+     cv2.imshow("imagem_processada", img_processada)
+     cv2.waitKey(0)
+
+     # img_com_x = cv2.imread(f"Imagem{l}X.png")
+     # cv2.imshow("imagem_normal_com_x", img)
+     # img_processada_com_x = process(img_com_x)
+     # cv2.imshow("imagem_processada_com_x", img_processada_com_x)
+
+
+     # contours, _ = cv2.findContours(img_processada, cv2.RETR_LIST, cv2.CHAIN_APPROX_NONE) #talvez usar o CHAIN_APPROX_SIMPLE, ver a diferenca em https://docs.opencv.org/4.x/d4/d73/tutorial_py_contours_begin.html
+
+     # # contornos_desenhados = cv2.drawContours(img, contours, -1, (0,255,0), 3)
+     # # cv2.imshow("contornos desenhados", contornos_desenhados)
+     # # cv2.waitKey(0)
+
+     # # o inner sao os pontos do quadrado do meio
+     # # o outter sao os pontos do octagno externo
+
+     # inner, outer = sorted(map(convex_hull, contours), key=len)
+
+     # lista_quadrados = quadraders(inner,outer)
+
+     # for i in range(0,9):
+     #      k=i+1
+     #      if(k%3==0):
+     #           j=3
+     #      else:
+     #           j=k%3
+     #      k=int(i/3)+1
+     #      lista_imagens_cortadas = corta_corta(np.array(lista_quadrados[i]))
+     #      cv2.imwrite(f"imagem_cortada_{k}{j}.png",lista_imagens_cortadas)
+     
+
+     # for i in range(0,9):
+     #      k=i+1
+     #      if(k%3==0):
+     #           j=3
+     #      else:
+     #           j=k%3
+     #      k=int(i/3)+1
+     #      lista_imagens_cortadas = corta_corta_depois(np.array(lista_quadrados[i]))
+     #      cv2.imwrite(f"imagem{l}_cortada_com_x{k}{j}.png",lista_imagens_cortadas)
+     input()
 
 # for x, y in quadraders(inner, outer):
 # #     print(f"X: {x}; X: {y}")
