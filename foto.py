@@ -1,36 +1,14 @@
+import cv2
+camera_port = 2 
+ramp_frames = 30 
+camera = cv2.VideoCapture(camera_port)
+def get_image():
+ retval, im = camera.read()
+ return im 
+for i in range(ramp_frames):
+ temp = camera.read()
 
-# program to capture single image from webcam in python 
-  
-# importing OpenCV library 
-import cv2 
-import glob 
-# initialize the camera 
-# If you have multiple camera connected with  
-# current device, assign a value in cam_port  
-# variable according to that 
-cam_port = 0
-cam = cv2.VideoCapture(cam_port) 
-  
-# reading the input using the camera 
-result, image = cam.read() 
-  
-# If image will detected without any error,  
-# show result 
-if result: 
-  
-    # showing result, it take frame name and image  
-    # output 
-    cv2.imshow("Imagem", image) 
-  
-    # saving image in local storage 
-    cv2.imwrite("Imagem.png", image) 
-  
-    # If keyboard interrupt occurs, destroy image  
-    # window 
-    cv2.waitKey(0) 
-    cv2.destroyWindow("Imagem") 
-    glob.os.remove("Imagem.png")
-  
-# If captured image is corrupted, moving to else part 
-else: 
-    print("No image detected. Please! try again") 
+camera_capture = get_image()
+filename = "image2.jpg"
+cv2.imwrite(filename,camera_capture)
+del(camera)

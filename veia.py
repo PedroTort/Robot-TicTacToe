@@ -197,12 +197,12 @@ def get_circles(img):
 
 
 # imagem do tabuleiro
-img = cv2.imread("t.jpg")
+img = cv2.imread("TabuleiroO1.jpg")
 img_processada = process(img)
 cv2.imwrite("primeira_t_processada.jpg", img_processada)
 
 # imagem do tabuleiro, com os simbolos temos que fazer os proximos passos em um loop (ateh a a parte da subtracao do tabuleiro com os simbolos ?)
-img_x = cv2.imread("o.jpg")
+img_x = cv2.imread("O1-1.jpg")
 img_processada_x = process(img_x)
 cv2.imwrite("primeira_x_processada.jpg", img_processada_x)
 
@@ -235,7 +235,7 @@ for i in range(0,9):
      cv2.imwrite(f"imagem_cortada_{k}{j}.png",lista_imagens_cortadas)
      imagem_cortada_com_x_tratada = get_squares_after_play(np.array(lista_quadrados[i]), img_sub_processada)
      cv2.imwrite(f"imagem_cortada_com_x_final{k}{j}.png",imagem_cortada_com_x_tratada)
-
+     get_circles(imagem_cortada_com_x_tratada)
 
 # for i in range (0,9):
 #      k=i+1
