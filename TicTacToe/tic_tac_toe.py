@@ -157,7 +157,7 @@ if __name__ == '__main__':
             player1 = Player()
             player2 = Bot(arduino,symbol = 'o')
         else:    
-            player1 = Bot(arduino,symbol = 'o')
+            player1 = Bot(arduino,symbol = 'x')
             player2 = Player()
 
         #_= input("Desenhe o tabuleiro")
@@ -182,7 +182,7 @@ if __name__ == '__main__':
                 lcd.mensagem_vencedor(2)
             else:
                 lcd.mensagem_vencedor(1)
-                
+
         lcd.espera_apertar_botao()
 
         
