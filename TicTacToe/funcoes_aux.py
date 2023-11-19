@@ -52,12 +52,11 @@ def detecta_jogada(img_processada,lista_quadrados,quadrados_preenchidos,simbolo)
 
         # processando os ruidos do da subtracao feita
         img_sub_processada = process_symbols(img_sub)
-        cv2.imwrite(f"imagens_imp/erro/foto{foto}.png",img_sub_processada)
+        #cv2.imwrite(f"imagens_imp/erro/foto{foto}.png",img_sub_processada)
         
         for index,quadrado_preenchindo in enumerate(quadrados_preenchidos):
             if not quadrado_preenchindo:
                 imagem = get_squares_after_play(np.array(lista_quadrados[index]), img_sub_processada)
-                
                 
                 three_d_array = imagem[:, :, np.newaxis]
                 imagem_3d = np.repeat(three_d_array, 3, axis=2)

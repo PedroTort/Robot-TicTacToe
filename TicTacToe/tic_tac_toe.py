@@ -162,17 +162,27 @@ if __name__ == '__main__':
                 ttc = tic_tac_toe(player1,player2,lcd)
                 player1.set_board(ttc.get_board())
                 player2.set_board(ttc.get_board())
-                qualidade_tabuleiro_boa = player1.testa_qualidade_tabuleiro()
+                qualidade_tabuleiro_boa = player1.cria_quadrados()
+                qualidade_tabuleiro_boa = player1.testa_qualidade_tabuleiro() and qualidade_tabuleiro_boa
+                enquadramento_tabuleiro_boa = player1.testa_enquadramento_tabuleiro()
             else:    
                 player1 = Bot(arduino,symbol = 'x',level = dificuldade)
                 player2 = Player('o')
                 ttc = tic_tac_toe(player1,player2,lcd)
                 player1.set_board(ttc.get_board())
                 player2.set_board(ttc.get_board())
-                qualidade_tabuleiro_boa = player2.testa_qualidade_tabuleiro()
-            if(qualidade_tabuleiro_boa):
+                qualidade_tabuleiro_boa = player2.cria_quadrados()
+                qualidade_tabuleiro_boa = player2.testa_qualidade_tabuleiro() and qualidade_tabuleiro_boa
+                enquadramento_tabuleiro_boa = player2.testa_enquadramento_tabuleiro()
+            if not qualidade_tabuleiro_boa:
+                lcd.mensagem_redesenha_tabuleiro()
+                continue
+            elif not enquadramento_tabuleiro_boa:
+                lcd.mensagem_enquadramento_tabuleiro()
+                continue
+            else:
                 break
-            lcd.mensagem_redesenha_tabuleiro()
+
         
         #_= input("Desenhe o tabuleiro")
         

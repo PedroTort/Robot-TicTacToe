@@ -52,3 +52,9 @@ class LCDRasp_sim:
         os.system('cls')
         print("Redesenhar o Quadro!!!")
         _ = input()
+    
+    #TODOOOOOOO
+    def mensagem_enquadramento_tabuleiro(self):
+        os.system('cls')
+        print("Melhore o enquadramento!!!")
+        _ = input()
