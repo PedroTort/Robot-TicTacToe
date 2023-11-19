@@ -7,6 +7,7 @@ class Player:
         self.imagem_tabuleiro_vazio = tira_foto_tabuleiro_vazio()
         cv2.imwrite("imagem_tabuleiro_vazio_processado.jpg", self.imagem_tabuleiro_vazio)
         self.lista_quadrados = encontra_quadrados(self.imagem_tabuleiro_vazio)
+        self.player_class = 'player'
     def play(self):
         
         posicao = detecta_jogada(self.imagem_tabuleiro_vazio,self.lista_quadrados,self.board.get_boolean_board(),'x')

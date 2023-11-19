@@ -25,6 +25,7 @@ class Bot:
             '2,1':7,
             '2,2':8,
         }
+        self.player_class = 'bot'
         
     def set_board(self,board):
         self.board = board

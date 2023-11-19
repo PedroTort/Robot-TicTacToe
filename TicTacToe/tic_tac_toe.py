@@ -3,6 +3,7 @@ from player import Player
 from bot import Bot
 from copy import deepcopy
 from arduino import Arduino
+from lcd import LCDRasp
 
 class Board:
     def __init__(self,board):
@@ -95,21 +96,31 @@ class Board:
         return boards
     
 class tic_tac_toe:
-    def __init__(self,player1,player2):
+    def __init__(self,player1,player2,lcd:LCDRasp):
+        self.lcd = lcd
         self.player1 = player1
         self.player2 = player2
         self.turn = 0 
         self.board = Board([' ' for _ in range(9)])
+        if self.player1.player_class == 'player':
+            self.print_message_p1 = lcd.mensagem_vez_jogador
+            self.print_message_p2 = lcd.mensagem_vez_robo
+        else:
+            self.print_message_p1 = lcd.mensagem_vez_robo
+            self.print_message_p2 = lcd.mensagem_vez_jogador
     
     def get_board(self):
         return self.board
 
     def play(self):
         while True:
+
+            self.print_message_p1()
             positionX = self.player1.play() 
 
             while not self.board.check_valid_play(positionX):
                 positionX = self.player1.play()
+
             self.board.set_symbol_at_position(positionX,'x')
             self.board.print_board()
 
@@ -119,10 +130,12 @@ class tic_tac_toe:
             elif self.board.check_draw():
                 return 'draw'
             
+            self.print_message_p2()
             positionO = self.player2.play()
 
             while not self.board.check_valid_play(positionO):
                 positionO = self.player2.play()
+
             self.board.set_symbol_at_position(positionO,'o')
             self.board.print_board()
 
@@ -131,14 +144,25 @@ class tic_tac_toe:
 
 if __name__ == '__main__':
     arduino = Arduino()
+    lcd = LCDRasp()
+    
     while True:
-        #_= input("Desenhe o tabuleiro")
+        simbolo = lcd.escolhe_simbolo()
+        dificuldade = lcd.escolhe_dificuldade()
+
+        lcd.mensagem_desenhando_tabuleiro()
         arduino.desenha_jogo_da_velha()
 
-        player1 = Player()
-        player2 = Bot(arduino,symbol = 'o')
+        if simbolo == 'X':
+            player1 = Player()
+            player2 = Bot(arduino,symbol = 'o')
+        else:    
+            player1 = Bot(arduino,symbol = 'o')
+            player2 = Player()
 
-        ttc = tic_tac_toe(player1,player2)
+        #_= input("Desenhe o tabuleiro")
+        
+        ttc = tic_tac_toe(player1,player2,lcd)
         player1.set_board(ttc.get_board())
         player2.set_board(ttc.get_board())
 
@@ -146,11 +170,19 @@ if __name__ == '__main__':
 
         if winner == 'draw':
             print("Draw")
+            lcd.mensagem_vencedor(3)
         elif winner == 'x':
             print("X wins!")
+            if simbolo == 'X':
+                lcd.mensagem_vencedor(1)
+            else:
+                lcd.mensagem_vencedor(2)
         elif winner == 'o':
-            print("O wins!")
-
-        _ = input()
+            if simbolo == 'X':
+                lcd.mensagem_vencedor(2)
+            else:
+                lcd.mensagem_vencedor(1)
+                
+        lcd.espera_apertar_botao()
 
         
