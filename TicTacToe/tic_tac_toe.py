@@ -3,7 +3,8 @@ from player import Player
 from bot import Bot
 from copy import deepcopy
 from arduino import Arduino
-from lcd import LCDRasp
+from lcd_sim import LCDRasp_sim
+from funcoes_aux import *
 
 class Board:
     def __init__(self,board):
@@ -31,6 +32,7 @@ class Board:
             7:'2,1',
             8:'2,2',
         }
+        
     def get_boolean_board(self):
         return [True if position != ' ' else False for position in self.board]
     
@@ -96,7 +98,7 @@ class Board:
         return boards
     
 class tic_tac_toe:
-    def __init__(self,player1,player2,lcd:LCDRasp):
+    def __init__(self,player1,player2,lcd:LCDRasp_sim):
         self.lcd = lcd
         self.player1 = player1
         self.player2 = player2
@@ -144,27 +146,37 @@ class tic_tac_toe:
 
 if __name__ == '__main__':
     arduino = Arduino()
-    lcd = LCDRasp()
+    lcd = LCDRasp_sim()
     
     while True:
         simbolo = lcd.escolhe_simbolo()
         dificuldade = lcd.escolhe_dificuldade()
 
         lcd.mensagem_desenhando_tabuleiro()
-        arduino.desenha_jogo_da_velha()
+        while True:
+            arduino.desenha_jogo_da_velha()
 
-        if simbolo == 'X':
-            player1 = Player()
-            player2 = Bot(arduino,symbol = 'o')
-        else:    
-            player1 = Bot(arduino,symbol = 'x')
-            player2 = Player()
-
+            if simbolo == 'X':
+                player1 = Player('x')
+                player2 = Bot(arduino,symbol = 'o',level = dificuldade)
+                ttc = tic_tac_toe(player1,player2,lcd)
+                player1.set_board(ttc.get_board())
+                player2.set_board(ttc.get_board())
+                qualidade_tabuleiro_boa = player1.testa_qualidade_tabuleiro()
+            else:    
+                player1 = Bot(arduino,symbol = 'x',level = dificuldade)
+                player2 = Player('o')
+                ttc = tic_tac_toe(player1,player2,lcd)
+                player1.set_board(ttc.get_board())
+                player2.set_board(ttc.get_board())
+                qualidade_tabuleiro_boa = player2.testa_qualidade_tabuleiro()
+            if(qualidade_tabuleiro_boa):
+                break
+            lcd.mensagem_redesenha_tabuleiro()
+        
         #_= input("Desenhe o tabuleiro")
         
-        ttc = tic_tac_toe(player1,player2,lcd)
-        player1.set_board(ttc.get_board())
-        player2.set_board(ttc.get_board())
+        
 
         winner = ttc.play()
 

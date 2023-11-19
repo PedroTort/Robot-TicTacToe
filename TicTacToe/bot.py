@@ -2,16 +2,17 @@ import random
 from arduino import Arduino
 
 class Bot:
-    def __init__(self,arduino:Arduino,symbol = 'o',level = 'hard'):
+    def __init__(self,arduino:Arduino,symbol = 'o',level = 'Dificil'):
         self.board = 'o'
         self.symbol = symbol
-        self.opponents_symbol = 'x' if symbol == 'o' else 'x'   
+        self.opponents_symbol = 'x' if symbol == 'o' else 'o'   
         self.arduino = arduino
         self.dict_level_depth = {
-            'easy': None,
-            'medium':1,
-            'hard': 15
+            'Facil': None,
+            'Medio':1,
+            'Dificil': 15
         }
+        self.level = level
 
         self.depth = self.dict_level_depth[level]
         self.board_mapping_2D_to_1D = {
@@ -43,28 +44,27 @@ class Bot:
     #turn = 0 -> bot`s turn
     #turn = 1 -> player`s turn
     def min_max(self,board,turn,depth):
+
         symbol = self.symbol if turn == 0 else self.opponents_symbol
         possible_boards = board.generate_possible_moves(symbol)
         weight = board.count_empty_positions() + 1
         multiplier = 1 if turn == 0 else -1
         evals = [[multiplier*weight,new_board[1]] if new_board[0].check_winner() == symbol else [0,new_board[1]] for new_board in possible_boards]
-        
-        if depth is not None:
-            depth -= 1
-
-        if depth is None or depth >=0:
-            for index,tuple in enumerate(evals):
-                if tuple[0] == 0 and possible_boards[index][0].count_empty_positions()>0:
-                    tuple[0] = self.min_max(possible_boards[index][0],int(not turn),depth)[0]
+    
+        for index,tuple in enumerate(evals):
+            if tuple[0] == 0 and possible_boards[index][0].count_empty_positions()>0:
+                tuple[0] = self.min_max(possible_boards[index][0],int(not turn),depth)[0]
 
         if turn == 0:
-            if depth is None:
-                value =  min(evals, key=lambda x: x[0])[0]
-            value =  max(evals, key=lambda x: x[0])[0]
-        else:
-            if depth is None:
+            if self.level == 'Facil':
+                value =  min(evals, key=lambda x: x[0])[0]    
+            else:
                 value =  max(evals, key=lambda x: x[0])[0]
-            value =  min(evals, key=lambda x: x[0])[0]
+        else:
+            if self.level == 'Facil':
+                value =  max(evals, key=lambda x: x[0])[0]
+            else:
+                value =  min(evals, key=lambda x: x[0])[0]
         
         values_tuples = [t for t in evals if t[0] == value]
         return random.choice(values_tuples)

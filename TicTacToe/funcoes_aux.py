@@ -23,6 +23,21 @@ def encontra_quadrados(imagem):
         raise("Lista de Quadrados Vazia!!!")
     return lista_quadrados
 
+def testa_qualidade_tabuleiro(lista_quadrados):
+    if len(lista_quadrados) != 9:
+        return False
+    return True
+
+def testa_posicionamento_tabuleiro(img_processada,lista_quadrados):
+    try:
+        for quadrado in lista_quadrados:
+            imagem = get_squares_after_play(np.array(quadrado), img_processada)                
+            three_d_array = imagem[:, :, np.newaxis]
+    except:
+        return False
+    return True
+
+
 def detecta_jogada(img_processada,lista_quadrados,quadrados_preenchidos,simbolo):
     print("Detectando...\n")
     contador_estabilidade = [0 for _ in range(9)]

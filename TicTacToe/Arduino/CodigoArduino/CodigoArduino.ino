@@ -9,7 +9,6 @@ int incomingByte = 0;
 int posCima = 0;
 int posDireita = 0;
 
-
 #define EN 8
 
 //Direction pin
@@ -59,10 +58,6 @@ void loop() {
   if(comando_feito){
     Serial.print('a');
   }
-}
-
-void regula_caneta(){
-
 }
 
 bool recebeExecutaComando(){
