@@ -153,4 +153,5 @@ def mensagem_vencedor(vencedor):
         lcd.text("Deu velha", 1)
     pause()
 
+
 escolhe_simbolo()
