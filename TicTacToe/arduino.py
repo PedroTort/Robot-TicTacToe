@@ -1,7 +1,7 @@
 import serial
 import time
 
-serial_port = 'COM3'
+serial_port = '/dev/ttyACCM0'
 baud_rate = 9600 
 
 class Arduino:
