@@ -11,6 +11,7 @@ import numpy as np
 
 def tira_foto_tabuleiro_vazio():
     img = capture_picture()
+    cv2.imwrite("imagem_tabuleiro_vazio.jpg", img)
     img_processada = process(img,np.ones((12,12)))
     return img_processada
 
@@ -18,6 +19,8 @@ def encontra_quadrados(imagem):
     contours, _ = cv2.findContours(imagem, cv2.RETR_LIST, cv2.CHAIN_APPROX_NONE) #talvez usar o CHAIN_APPROX_SIMPLE, ver a diferenca em https://docs.opencv.org/4.x/d4/d73/tutorial_py_contours_begin.html
     aux = sorted(map(convex_hull, contours), key=len)
     lista_quadrados = get_square_corners_v2(aux)
+    if lista_quadrados is None:
+        raise("Lista de Quadrados Vazia!!!")
     return lista_quadrados
 
 def detecta_jogada(img_processada,lista_quadrados,quadrados_preenchidos,simbolo):
@@ -35,12 +38,12 @@ def detecta_jogada(img_processada,lista_quadrados,quadrados_preenchidos,simbolo)
         # processando os ruidos do da subtracao feita
         img_sub_processada = process_symbols(img_sub)
         cv2.imwrite(f"imagens_imp/erro/foto{foto}.png",img_sub_processada)
-        if lista_quadrados is None:
-            raise("Lista de Quadrados Vazia!!!")
         
         for index,quadrado_preenchindo in enumerate(quadrados_preenchidos):
             if not quadrado_preenchindo:
                 imagem = get_squares_after_play(np.array(lista_quadrados[index]), img_sub_processada)
+                
+                
                 three_d_array = imagem[:, :, np.newaxis]
                 imagem_3d = np.repeat(three_d_array, 3, axis=2)
 
@@ -71,7 +74,7 @@ def detecta_jogada(img_processada,lista_quadrados,quadrados_preenchidos,simbolo)
                     cv2.imwrite(f"imagens_com_erro/simbolo_erro.png",lista_imagens[index])
                     return None
                 return index
-        time.sleep(0.3)
+        #time.sleep(0.3)
 
 detector_de_jogada = load_model(os.path.join('models','image_detector.h5'))
 classificador_de_jogada = load_model(os.path.join('models','image_classifier.h5'))
@@ -295,26 +298,28 @@ def get_squares_init(pontos_quadrado):
      
 def get_squares_after_play(pontos_quadrado, img):
 
-     # https://stackoverflow.com/questions/48301186/cropping-concave-polygon-from-image-using-opencv-python
+    # https://stackoverflow.com/questions/48301186/cropping-concave-polygon-from-image-using-opencv-python
 
-     # criando um retangulo com os vertices
-     rect_corte = cv2.boundingRect(pontos_quadrado)
-     # passando as coordenadas para as variaveis
-     x,y,w,h = rect_corte
-     # cortando a imagem com as variaveis
-     croped = img[y:y+h, x:x+w].copy()
+    # criando um retangulo com os vertices
+    rect_corte = cv2.boundingRect(pontos_quadrado)
+    # passando as coordenadas para as variaveis
 
-     # fazendo mascara para o corte da imagem
-     pontos_quadrado = pontos_quadrado - pontos_quadrado.min(axis=0)
-     mask = np.zeros(croped.shape[:2], np.uint8)
-     # desenhando os contornos usando a mascara
-     cv2.drawContours(mask, [pontos_quadrado], -1, (255, 255, 255), -1, cv2.LINE_AA)
+    x,y,w,h = rect_corte
 
-     # fazendo comparacao da imagem cortada com a mascara
-     croped_image_final = cv2.bitwise_and(croped, croped, mask=mask)
-     return croped_image_final
-     # cv2.imshow("final",croped_image_final)
-     # cv2.waitKey(0)
+    # cortando a imagem com as variaveis
+    croped = img[y:y+h, x:x+w].copy()
+
+    # fazendo mascara para o corte da imagem
+    pontos_quadrado = pontos_quadrado - pontos_quadrado.min(axis=0)
+    mask = np.zeros(croped.shape[:2], np.uint8)
+    # desenhando os contornos usando a mascara
+    cv2.drawContours(mask, [pontos_quadrado], -1, (255, 255, 255), -1, cv2.LINE_AA)
+
+    # fazendo comparacao da imagem cortada com a mascara
+    croped_image_final = cv2.bitwise_and(croped, croped, mask=mask)
+    return croped_image_final
+    # cv2.imshow("final",croped_image_final)
+    # cv2.waitKey(0)
         
 # recebe a imagem sem filtrar (imagem original dos quadrados com os simbolos)
 def get_circles(img):

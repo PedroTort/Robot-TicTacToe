@@ -2,6 +2,7 @@ import os
 from player import Player
 from bot import Bot
 from copy import deepcopy
+from arduino import Arduino
 
 class Board:
     def __init__(self,board):
@@ -129,11 +130,13 @@ class tic_tac_toe:
                 return 'o'
 
 if __name__ == '__main__':
+    arduino = Arduino()
     while True:
-        _= input("Desenhe o tabuleiro")
+        #_= input("Desenhe o tabuleiro")
+        arduino.desenha_jogo_da_velha()
 
         player1 = Player()
-        player2 = Bot(symbol = 'o')
+        player2 = Bot(arduino,symbol = 'o')
 
         ttc = tic_tac_toe(player1,player2)
         player1.set_board(ttc.get_board())
@@ -147,5 +150,7 @@ if __name__ == '__main__':
             print("X wins!")
         elif winner == 'o':
             print("O wins!")
+
+        _ = input()
 
         

@@ -1,11 +1,12 @@
 import random
+from arduino import Arduino
 
 class Bot:
-    def __init__(self,symbol = 'o',level = 'hard'):
+    def __init__(self,arduino:Arduino,symbol = 'o',level = 'hard'):
         self.board = 'o'
         self.symbol = symbol
         self.opponents_symbol = 'x' if symbol == 'o' else 'x'   
-        
+        self.arduino = arduino
         self.dict_level_depth = {
             'easy': None,
             'medium':1,
@@ -13,12 +14,30 @@ class Bot:
         }
 
         self.depth = self.dict_level_depth[level]
+        self.board_mapping_2D_to_1D = {
+            '0,0':0,
+            '0,1':1,
+            '0,2':2,
+            '1,0':3,
+            '1,1':4,
+            '1,2':5,
+            '2,0':6,
+            '2,1':7,
+            '2,2':8,
+        }
         
     def set_board(self,board):
         self.board = board
 
     def play(self):
-        return self.min_max(self.board,0,self.depth)[1]
+        position2D = self.min_max(self.board,0,self.depth)[1]
+
+        position1D = self.board_mapping_2D_to_1D[position2D]
+        self.arduino.movimenta(str(position1D))
+    
+        self.arduino.desenha_simbolo(self.symbol)
+        self.arduino.volta_posicao_inicial()
+        return position2D
 
     #turn = 0 -> bot`s turn
     #turn = 1 -> player`s turn

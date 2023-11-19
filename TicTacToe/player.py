@@ -5,6 +5,7 @@ class Player:
     def set_board(self,board):
         self.board = board
         self.imagem_tabuleiro_vazio = tira_foto_tabuleiro_vazio()
+        cv2.imwrite("imagem_tabuleiro_vazio_processado.jpg", self.imagem_tabuleiro_vazio)
         self.lista_quadrados = encontra_quadrados(self.imagem_tabuleiro_vazio)
     def play(self):
         
