@@ -32,6 +32,9 @@ int posDireita = 0;
 int delayTime = 300;
 int stps = 10;
 
+int desenhandoDiagonal = false;
+char simbolo;
+int posicaoAtual;
 void setup() {
   pinMode(X_DIR, OUTPUT);
   pinMode(X_STP, OUTPUT);
@@ -63,40 +66,49 @@ void loop() {
 bool recebeExecutaComando(){
   const char input = le_input();
   switch (input){
-    case '2':
-      vaiPosicao11();
+    case '2': //0
+      if (desenhandoDiagonal) desenhaDiagonalVencedor(input);
+      else{posicaoAtual=2;  vaiPosicao11();}
       return true;
       break;
-    case '5':
-      vaiPosicao12();
+    case '5': //1
+      if (desenhandoDiagonal) desenhaDiagonalVencedor(input);
+      else{posicaoAtual=5;  vaiPosicao12();}
       return true;
       break;
-    case '8':
+    case '8': //2
       vaiPosicao13();
+      posicaoAtual=8;
       return true;
       break;
-    case '1':
-      vaiPosicao21();
+    case '1': //3
+      if (desenhandoDiagonal) desenhaDiagonalVencedor(input);
+      else{posicaoAtual=1;  vaiPosicao21();}
       return true;
       break;
-    case '4':
-      vaiPosicao22();
+    case '4': //4
+      if (desenhandoDiagonal) desenhaDiagonalVencedor(input);
+      else{posicaoAtual=4;  vaiPosicao22();}
       return true;
       break;
-    case '7':
-      vaiPosicao23();
+    case '7': //5
+      if (desenhandoDiagonal) desenhaDiagonalVencedor(input);
+      else{posicaoAtual=7;  vaiPosicao23();}
       return true;
       break;
-    case '0':
-      vaiPosicao31();
+    case '0': //6
+      if (desenhandoDiagonal) desenhaDiagonalVencedor(input);
+      else{posicaoAtual=0;  vaiPosicao31();}
       return true;
       break;
-    case '3':
-      vaiPosicao32();
+    case '3': //7
+      if (desenhandoDiagonal) desenhaDiagonalVencedor(input);
+      else{posicaoAtual=3;  vaiPosicao32();}
       return true;
       break;
-    case '6':
-      vaiPosicao33();
+    case '6': //8
+      if (desenhandoDiagonal) desenhaDiagonalVencedor(input);
+      else{posicaoAtual=6;  vaiPosicao33();}
       return true;
       break;
     case 'i':
@@ -109,17 +121,209 @@ bool recebeExecutaComando(){
       break;
     case 'o':
       desenhaCirculoV2();
+      simbolo = 'o';
       return true;
       break;
     case 'x':
       desenhaX();
+      simbolo = 'x';
+      return true;
+      break;
+    case 'd':
+      desenhandoDiagonal = true;
       return true;
       break;
     case 's':
       posCaneta = posCanetaMedia;
       myservo.write(posCaneta);
+    
+      
   }
   return false;
+}
+
+void desenhaDiagonalVencedor(char diagonal){
+  if (posicaoAtual == -1) return;
+  int delta_x;
+  int delta_y;
+
+  char caso_diagonal;
+
+  switch(diagonal){
+    case '0':
+      if (posicaoAtual == 0 || posicaoAtual == 3 || posicaoAtual == 6){
+        caso_diagonal = '3';
+      }
+      else if (posicaoAtual == 1 || posicaoAtual == 4 || posicaoAtual == 7){
+        cima(300);
+        caso_diagonal = '4';
+      }
+      else if (posicaoAtual == 2 || posicaoAtual == 5 || posicaoAtual == 8){
+        caso_diagonal = '4';
+      }
+    break;
+    case '1':
+      if (posicaoAtual == 0 || posicaoAtual == 1 || posicaoAtual == 2){
+        caso_diagonal = '1';
+      }
+      else if (posicaoAtual == 3 || posicaoAtual == 4 || posicaoAtual == 5){
+        direita(300);
+        caso_diagonal = '6';
+      }
+      else if (posicaoAtual == 6 || posicaoAtual == 7 || posicaoAtual == 8){
+        caso_diagonal = '6';
+      }
+    break;
+    case '2':
+      if (posicaoAtual == 0){
+        caso_diagonal = '0';
+      }
+      else if (posicaoAtual == 4){
+        diagonalCimaDireita(300);
+        caso_diagonal = '7';
+      }
+      else if (posicaoAtual == 8){
+        caso_diagonal = '7';
+      }
+    break;
+    case '3':
+      if (posicaoAtual == 2){
+        caso_diagonal = '2';
+      }
+      else if (posicaoAtual == 4){
+        diagonalCimaEsquerda(300);
+        caso_diagonal = '2';
+      }
+      else if (posicaoAtual == 6){
+        caso_diagonal = '5';
+      }
+    break;
+  }
+  
+  switch(caso_diagonal){
+    case '0': 
+      if(simbolo == 'x') {
+        delta_x = 221;
+        delta_y = 221;
+      }
+      else{
+        delta_x = 250;
+        delta_y = 150;
+      }
+      esquerda(delta_x);
+      baixo(delta_y);
+      desceCaneta();
+      diagonalCimaDireita(900);
+      sobeCaneta();
+      break;
+    case '1':
+      if(simbolo == 'x') {
+        delta_x = 221;
+        delta_y = 71;
+      }
+      else{
+        delta_x = 250;
+        delta_y = 0;
+      }
+      esquerda(delta_x);
+      baixo(delta_y);
+      desceCaneta();
+      direita(900);
+      sobeCaneta();
+      break;
+    case '2':
+      if(simbolo == 'x') {
+        delta_x = 221;
+        delta_y = 79;
+      }
+      else{
+        delta_x = 250;
+        delta_y = 150;
+      }
+      esquerda(delta_x);
+      cima(delta_y);
+      desceCaneta();
+      diagonalBaixoDireita(900);
+      sobeCaneta();
+      break;
+    case '3':
+      if(simbolo == 'x') {
+        delta_x = 71;
+        delta_y = 221;
+      }
+      else{
+        delta_x = 100;
+        delta_y = 150;
+      }
+
+      esquerda(delta_x);
+      baixo(delta_y);
+      desceCaneta();
+      cima(900);
+      sobeCaneta();
+      break;
+    case '4':
+      if(simbolo == 'x') {
+        delta_x = 71;
+        delta_y = 79;
+      }
+      else{
+        delta_x = 100;
+        delta_y = 150;
+      }
+      esquerda(delta_x);
+      cima(delta_y);
+      desceCaneta();
+      baixo(900);
+      sobeCaneta();
+      break;
+    case '5':
+      if(simbolo == 'x') {
+        delta_x = 79;
+        delta_y = 221;
+      }
+      else{
+        delta_x = 50;
+        delta_y = 150;
+      }
+      direita(delta_x);
+      baixo(delta_y);
+      desceCaneta();
+      diagonalCimaEsquerda(900);
+      sobeCaneta();
+      break;
+    case '6':
+      if(simbolo == 'x') {
+        delta_x = 79;
+        delta_y = 71;
+      }
+      else{
+        delta_x = 50;
+        delta_y = 0;
+      }
+      direita(delta_x);
+      baixo(delta_y);
+      desceCaneta();
+      esquerda(900);
+      sobeCaneta();
+      break;
+    case '7':
+      if(simbolo == 'x') {
+        delta_x = 79;
+        delta_y = 79;
+      }
+      else{
+        delta_x = 50;
+        delta_y = 150;
+      }
+      direita(delta_x);
+      cima(delta_y);
+      desceCaneta();
+      diagonalBaixoEsquerda(900);
+      sobeCaneta();
+      break;
+  }
+  desenhandoDiagonal = false;
 }
 
 const char le_input(){
@@ -145,6 +349,7 @@ void volta_posicao_inicial(){
     baixo(1);
     delay(0.5);
   }
+  posicaoAtual = -1;
   
 }
 

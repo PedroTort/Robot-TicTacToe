@@ -5,6 +5,7 @@ class Player:
     def __init__(self,symbol = 'x'):
         self.player_class = 'player'
         self.symbol = symbol
+        self.lista_quadrados = None
 
     def set_board(self,board):
         self.board = board

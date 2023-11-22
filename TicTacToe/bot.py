@@ -3,10 +3,12 @@ from arduino import Arduino
 
 class Bot:
     def __init__(self,arduino:Arduino,symbol = 'o',level = 'Dificil'):
-        self.board = 'o'
         self.symbol = symbol
         self.opponents_symbol = 'x' if symbol == 'o' else 'o'   
         self.arduino = arduino
+        
+        self.primeira_jogada = True
+                
         self.dict_level_depth = {
             'Facil': None,
             'Medio':1,
@@ -32,12 +34,21 @@ class Bot:
         self.board = board
 
     def play(self):
-        position2D = self.min_max(self.board,0,self.depth)[1]
+        if self.primeira_jogada and self.symbol == 'x':
+            self.primeira_jogada = False
+            position2D = random.choice(list(self.board_mapping_2D_to_1D.keys()))
+        else:
+            self.primeira_jogada = False
+            position2D = self.min_max(self.board,0,self.depth)[1]
 
         position1D = self.board_mapping_2D_to_1D[position2D]
         self.arduino.movimenta(str(position1D))
-    
         self.arduino.desenha_simbolo(self.symbol)
+        self.board.set_symbol_at_position(position2D,self.symbol)
+        axis_vencedor = self.board.check_winner_axis()
+        if axis_vencedor is not None:
+            self.arduino.desenhar_linha_vencedor(axis_vencedor)    
+        self.board.set_symbol_at_position(position2D,' ')
         self.arduino.volta_posicao_inicial()
         return position2D
 

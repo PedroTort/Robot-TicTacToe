@@ -3,11 +3,14 @@ import numpy as np
 from operator import itemgetter
 import os
 import time
+import statistics
 
 from tensorflow.keras.models import load_model
 import tensorflow as tf
 import os
 import numpy as np
+
+tamanho_medio_quadrados = 13383.775
 
 def tira_foto_tabuleiro_vazio():
     img = capture_picture()
@@ -15,18 +18,38 @@ def tira_foto_tabuleiro_vazio():
     img_processada = process(img,np.ones((12,12)))
     return img_processada
 
+def calcula_area(vertices):
+    vertices = np.array(vertices, dtype=np.int32)
+    vertices = vertices.reshape((-1, 1, 2))
+    area = cv2.contourArea(vertices);
+    return area
+
 def encontra_quadrados(imagem):
     contours, _ = cv2.findContours(imagem, cv2.RETR_LIST, cv2.CHAIN_APPROX_NONE) #talvez usar o CHAIN_APPROX_SIMPLE, ver a diferenca em https://docs.opencv.org/4.x/d4/d73/tutorial_py_contours_begin.html
     aux = sorted(map(convex_hull, contours), key=len)
     lista_quadrados = get_square_corners_v2(aux)
-    if lista_quadrados is None:
+    if len(lista_quadrados) != 9:
         raise("Lista de Quadrados Vazia!!!")
+    
     return lista_quadrados
 
 def testa_qualidade_tabuleiro(lista_quadrados):
-    if len(lista_quadrados) != 9:
+    list_area_size = []
+    try:
+        for square in lista_quadrados:
+            list_area_size.append(calcula_area(square))
+        list_area_size = np.array(list_area_size)
+
+        media = np.mean(list_area_size)
+
+        if media >= tamanho_medio_quadrados*0.8 and media <= tamanho_medio_quadrados*1.2:
+            return True
+        return False 
+        
         return False
-    return True
+    except:
+        return False
+    
 
 def testa_posicionamento_tabuleiro(img_processada,lista_quadrados):
     try:
@@ -53,36 +76,41 @@ def detecta_jogada(img_processada,lista_quadrados,quadrados_preenchidos,simbolo)
         # processando os ruidos do da subtracao feita
         img_sub_processada = process_symbols(img_sub)
         #cv2.imwrite(f"imagens_imp/erro/foto{foto}.png",img_sub_processada)
-        
+        simbolo_detectado = False
         for index,quadrado_preenchindo in enumerate(quadrados_preenchidos):
             if not quadrado_preenchindo:
                 imagem = get_squares_after_play(np.array(lista_quadrados[index]), img_sub_processada)
                 
                 three_d_array = imagem[:, :, np.newaxis]
                 imagem_3d = np.repeat(three_d_array, 3, axis=2)
-
-                if detector_jogada(imagem_3d):
+                detectou_jogada = detector_jogada(imagem_3d)
+                if detectou_jogada and not simbolo_detectado:
                     if simbolos_detectado[index] is None:
                         contador_estabilidade[index] += 1
                         lista_imagens[index] = imagem_3d
                         simbolos_detectado[index] = classificador_jogada(imagem_3d)
+                        simbolo_detectado = True
                     else:
                         y_hat = classificador_jogada(imagem_3d)
                         if simbolos_detectado[index] == y_hat:
                             contador_estabilidade[index] += 1
                             lista_imagens[index] = imagem_3d
                             simbolos_detectado[index] = y_hat
+                            simbolo_detectado = True
                         else:
                             contador_estabilidade[index] = 0
                             lista_imagens[index] = None
                             simbolos_detectado[index] = None
+                elif detectou_jogada and simbolo_detectado:
+                    contador_estabilidade = [0 for _ in range(9)]
+                    break
                 else:
                     contador_estabilidade[index] = 0
                     lista_imagens[index] = None
                     simbolos_detectado[index] = None
 
         for index,valor in enumerate(contador_estabilidade):
-            if valor>2:
+            if valor>1:
                 y_hat = simbolos_detectado[index]
                 if y_hat != simbolo:
                     cv2.imwrite(f"imagens_com_erro/simbolo_erro.png",lista_imagens[index])
@@ -128,10 +156,13 @@ def capture_picture():
         else:
             print("Error: Could not read frame.")
             time.sleep(10)
+    alpha = 3  # Increase this value to make the image brighter
+    beta = 0     # You can adjust this value if needed
+    brightened_frame = cv2.addWeighted(frame, alpha, np.zeros(frame.shape, frame.dtype), 0, beta)
 
     # Release the webcam
     cap.release()
-    return frame
+    return brightened_frame
 # processando a imagem!
 def process(img,dilat_kernel = np.ones((9, 9))):
      # convercao de RGB para BGR e grayscale

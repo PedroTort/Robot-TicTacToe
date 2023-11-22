@@ -64,6 +64,19 @@ class Board:
     def check_draw(self):
         return ' ' not in self.board 
     
+    def check_winner_axis(self):
+        for i in range(3):
+            if self.board[i*3] != ' ' and self.board[i*3] == self.board[i*3+1] and self.board[i*3+1] == self.board[i*3+2]:
+                return '0'
+            elif self.board[i+3*0] != ' ' and self.board[i+3*0] == self.board[i+3*1] and self.board[i+3*1] == self.board[i+3*2]:
+                return '1'
+            
+        if self.board[0] != ' ' and self.board[0] == self.board[4] and self.board[4] == self.board[8]:
+            return '2'
+        elif self.board[2] != ' ' and self.board[2] == self.board[4] and self.board[4] == self.board[6]:
+            return '3'
+        return None
+
     def check_winner(self):
         for i in range(3):
             if self.board[i*3] != ' ' and self.board[i*3] == self.board[i*3+1] and self.board[i*3+1] == self.board[i*3+2]:
@@ -164,7 +177,9 @@ if __name__ == '__main__':
                 player2.set_board(ttc.get_board())
                 qualidade_tabuleiro_boa = player1.cria_quadrados()
                 qualidade_tabuleiro_boa = player1.testa_qualidade_tabuleiro() and qualidade_tabuleiro_boa
-                enquadramento_tabuleiro_boa = player1.testa_enquadramento_tabuleiro()
+
+                if qualidade_tabuleiro_boa:
+                    enquadramento_tabuleiro_boa = player1.testa_enquadramento_tabuleiro()
             else:    
                 player1 = Bot(arduino,symbol = 'x',level = dificuldade)
                 player2 = Player('o')
@@ -173,7 +188,8 @@ if __name__ == '__main__':
                 player2.set_board(ttc.get_board())
                 qualidade_tabuleiro_boa = player2.cria_quadrados()
                 qualidade_tabuleiro_boa = player2.testa_qualidade_tabuleiro() and qualidade_tabuleiro_boa
-                enquadramento_tabuleiro_boa = player2.testa_enquadramento_tabuleiro()
+                if qualidade_tabuleiro_boa:
+                    enquadramento_tabuleiro_boa = player2.testa_enquadramento_tabuleiro()
             if not qualidade_tabuleiro_boa:
                 lcd.mensagem_redesenha_tabuleiro()
                 continue

@@ -26,8 +26,16 @@ class Arduino:
         self.serial.write('i'.encode())
         self.recebe_ack()
 
+    def desenhar_linha_vencedor(self,eixo):
+        self.serial.write('d'.encode())
+        self.recebe_ack()
+
+        self.serial.write(eixo.encode())
+        self.recebe_ack()
+
     def recebe_ack(self):
         while True:
             received_data = self.serial.read(1).decode('utf-8')
             if received_data == 'a':
                 break
+
