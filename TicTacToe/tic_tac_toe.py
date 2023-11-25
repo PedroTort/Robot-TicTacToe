@@ -3,7 +3,7 @@ from player import Player
 from bot import Bot
 from copy import deepcopy
 from arduino import Arduino
-from lcd_sim import LCDRasp_sim
+from lcd import LCDRasp
 from funcoes_aux import *
 
 class Board:
@@ -161,7 +161,7 @@ if __name__ == '__main__':
     cam_port = 2
     cap = cv2.VideoCapture(cam_port)
     arduino = Arduino()
-    lcd = LCDRasp_sim()
+    lcd = LCDRasp()
     
     while True:
         simbolo = lcd.escolhe_simbolo()
