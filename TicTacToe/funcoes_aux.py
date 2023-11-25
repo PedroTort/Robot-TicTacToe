@@ -12,8 +12,8 @@ import numpy as np
 
 tamanho_medio_quadrados = 13383.775
 
-def tira_foto_tabuleiro_vazio():
-    img = capture_picture()
+def tira_foto_tabuleiro_vazio(cap):
+    img = capture_picture(cap)
     cv2.imwrite("imagem_tabuleiro_vazio.jpg", img)
     img_processada = process(img,np.ones((12,12)))
     return img_processada
@@ -61,14 +61,14 @@ def testa_posicionamento_tabuleiro(img_processada,lista_quadrados):
     return True
 
 
-def detecta_jogada(img_processada,lista_quadrados,quadrados_preenchidos,simbolo):
+def detecta_jogada(img_processada,lista_quadrados,quadrados_preenchidos,simbolo, cap):
     print("Detectando...\n")
     contador_estabilidade = [0 for _ in range(9)]
     simbolos_detectado = [None for _ in range(9)]
     lista_imagens = [None for _ in range(9)]
     foto = 0
     while True:
-        img_x = capture_picture()
+        img_x = capture_picture(cap)
         img_processada_x = process(img_x)
 
         img_sub = cv2.subtract(img_processada_x, img_processada)
@@ -138,31 +138,43 @@ def classificador_jogada(imagem):
     else:
         return 'o'
 
-def capture_picture():
-    # Open a connection to the webcam (0 is usually the default webcam)
-    while True:
-        cap = cv2.VideoCapture(0)
+# def capture_picture():
+#     # Open a connection to the webcam (0 is usually the default webcam)
+#     while True:
+#         cap = cv2.VideoCapture(0)
     
-        if not cap.isOpened():
-            print("Error: Could not open webcam.")
-            while not cap.isOpened():
-                cap = cv2.VideoCapture(1)
+#         if not cap.isOpened():
+#             print("Error: Could not open webcam.")
+#             while not cap.isOpened():
+#                 cap = cv2.VideoCapture(1)
             
-        # Capture a single frame
-        ret, frame = cap.read()
+#         # Capture a single frame
+#         ret, frame = cap.read()
     
-        if ret:
-            break
-        else:
-            print("Error: Could not read frame.")
-            time.sleep(10)
-    alpha = 3  # Increase this value to make the image brighter
-    beta = 0     # You can adjust this value if needed
-    brightened_frame = cv2.addWeighted(frame, alpha, np.zeros(frame.shape, frame.dtype), 0, beta)
+#         if ret:
+#             break
+#         else:
+#             print("Error: Could not read frame.")
+#             time.sleep(10)
+#     alpha = 3  # Increase this value to make the image brighter
+#     beta = 0     # You can adjust this value if needed
+#     brightened_frame = cv2.addWeighted(frame, alpha, np.zeros(frame.shape, frame.dtype), 0, beta)
 
-    # Release the webcam
-    cap.release()
-    return brightened_frame
+#     # Release the webcam
+#     cap.release()
+#     return brightened_frame
+
+#captuer_picture com a camera sempre ligada
+def capture_picture(cap):
+    # Open a connection to the webcam (0 is usually the default webcam)        
+    # Capture a single frame
+    i = 0
+    while i != 10:
+        _, frame = cap.read()
+        i+=1
+    return frame
+
+
 # processando a imagem!
 def process(img,dilat_kernel = np.ones((9, 9))):
      # convercao de RGB para BGR e grayscale

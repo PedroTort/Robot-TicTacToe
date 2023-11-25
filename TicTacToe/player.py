@@ -2,16 +2,17 @@ import time
 from funcoes_aux import *
 
 class Player:
-    def __init__(self,symbol = 'x'):
+    def __init__(self, cap, symbol = 'x'):
         self.player_class = 'player'
         self.symbol = symbol
         self.lista_quadrados = None
+        self.cap = cap
 
     def set_board(self,board):
         self.board = board
         
     def cria_quadrados(self):
-        self.imagem_tabuleiro_vazio = tira_foto_tabuleiro_vazio()
+        self.imagem_tabuleiro_vazio = tira_foto_tabuleiro_vazio(self.cap)
         cv2.imwrite("imagem_tabuleiro_vazio_processado.jpg", self.imagem_tabuleiro_vazio)
         try:
             self.lista_quadrados = encontra_quadrados(self.imagem_tabuleiro_vazio)
@@ -31,10 +32,10 @@ class Player:
     
     def play(self):
         
-        posicao = detecta_jogada(self.imagem_tabuleiro_vazio,self.lista_quadrados,self.board.get_boolean_board(),self.symbol)
+        posicao = detecta_jogada(self.imagem_tabuleiro_vazio,self.lista_quadrados,self.board.get_boolean_board(),self.symbol, self.cap)
         while posicao is None:
             print("Faça uma jogada válida!!!")
-            posicao = detecta_jogada(self.imagem_tabuleiro_vazio,self.lista_quadrados,self.board.get_boolean_board(),self.symbol)
+            posicao = detecta_jogada(self.imagem_tabuleiro_vazio,self.lista_quadrados,self.board.get_boolean_board(),self.symbol, self.cap)
         return posicao
 
     

@@ -127,14 +127,14 @@ class tic_tac_toe:
     def get_board(self):
         return self.board
 
-    def play(self):
+    def play(self, cap):
         while True:
 
             self.print_message_p1()
-            positionX = self.player1.play() 
+            positionX = self.player1.play(cap) 
 
             while not self.board.check_valid_play(positionX):
-                positionX = self.player1.play()
+                positionX = self.player1.play(cap)
 
             self.board.set_symbol_at_position(positionX,'x')
             self.board.print_board()
@@ -158,6 +158,8 @@ class tic_tac_toe:
                 return 'o'
 
 if __name__ == '__main__':
+    cam_port = 2
+    cap = cv2.VideoCapture(cam_port)
     arduino = Arduino()
     lcd = LCDRasp_sim()
     
@@ -170,7 +172,7 @@ if __name__ == '__main__':
             arduino.desenha_jogo_da_velha()
 
             if simbolo == 'X':
-                player1 = Player('x')
+                player1 = Player(cap, 'x')
                 player2 = Bot(arduino,symbol = 'o',level = dificuldade)
                 ttc = tic_tac_toe(player1,player2,lcd)
                 player1.set_board(ttc.get_board())
@@ -182,7 +184,7 @@ if __name__ == '__main__':
                     enquadramento_tabuleiro_boa = player1.testa_enquadramento_tabuleiro()
             else:    
                 player1 = Bot(arduino,symbol = 'x',level = dificuldade)
-                player2 = Player('o')
+                player2 = Player(cap, 'o')
                 ttc = tic_tac_toe(player1,player2,lcd)
                 player1.set_board(ttc.get_board())
                 player2.set_board(ttc.get_board())
