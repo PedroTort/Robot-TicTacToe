@@ -27,7 +27,7 @@ def tira_foto_tabuleiro_vazio(cap):
 def processa_tabuleiro_vazio(cap,tabuleiro_vazio, quadro_vazio):
     # quadro = cv2.imread("imagem_quadro_vazio.jpg")
     # tabuleiro = cv2.imread("imagem_tabuleiro_vazio.jpg")
-    sub = cv2.subtract(tabuleiro_vazio, quadro_vazio)
+    sub = cv2.subtract(quadro_vazio, tabuleiro_vazio)
     img_processada = process(sub,np.ones((12,12)))
     cv2.imwrite("imagem_subtracao_processada.jpg", img_processada)
     return img_processada
