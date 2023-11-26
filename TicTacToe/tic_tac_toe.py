@@ -162,8 +162,10 @@ if __name__ == '__main__':
     cap = cv2.VideoCapture(cam_port)
     arduino = Arduino()
     lcd = LCDRasp()
+    flag = True
     
-    while True:
+    while True and flag:
+    
         simbolo = lcd.escolhe_simbolo()
         dificuldade = lcd.escolhe_dificuldade()
         quadro_vazio = tira_foto_quadro_vazio(cap)
@@ -201,28 +203,23 @@ if __name__ == '__main__':
             else:
                 break
 
-        
-        #_= input("Desenhe o tabuleiro")
-        
-        
 
         winner = ttc.play()
 
         if winner == 'draw':
             print("Draw")
-            lcd.mensagem_vencedor(3)
+            flag = lcd.mensagem_vencedor(3)
         elif winner == 'x':
             print("X wins!")
             if simbolo == 'X':
-                lcd.mensagem_vencedor(1)
+                flag = lcd.mensagem_vencedor(1)
             else:
-                lcd.mensagem_vencedor(2)
+                flag = lcd.mensagem_vencedor(2)
         elif winner == 'o':
             if simbolo == 'X':
-                lcd.mensagem_vencedor(2)
+                flag = lcd.mensagem_vencedor(2)
             else:
-                lcd.mensagem_vencedor(1)
-
-        lcd.espera_apertar_botao()
-
+                flag = lcd.mensagem_vencedor(1)
+        print(flag)
         
+    cap.release()

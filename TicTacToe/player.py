@@ -1,5 +1,6 @@
 import time
 from funcoes_aux import *
+from lcd import LCDRasp
 
 class Player:
     def __init__(self,tabuleiro_vazio, quadro_vazio, cap, symbol = 'x'):
@@ -33,10 +34,11 @@ class Player:
         return False
     
     def play(self):
-        
+        lcd = LCDRasp() # modo feio de fazer
+        lcd.mensagem_vez_jogador() # modo feio de fazer
         posicao = detecta_jogada(self.imagem_tabuleiro_vazio,self.lista_quadrados,self.board.get_boolean_board(),self.symbol, self.cap)
         while posicao is None:
-            print("Faça uma jogada válida!!!")
+            lcd.mensagem_jogada_invalida()
             posicao = detecta_jogada(self.imagem_tabuleiro_vazio,self.lista_quadrados,self.board.get_boolean_board(),self.symbol, self.cap)
         return posicao
 

@@ -29,7 +29,7 @@ int posDireita = 0;
 #define PIN_SERVO_MOTOR 11
 
 //A498
-int delayTime = 300;
+int delayTime = 400;
 int stps = 10;
 
 int desenhandoDiagonal = false;
@@ -136,7 +136,34 @@ bool recebeExecutaComando(){
     case 's':
       posCaneta = posCanetaMedia;
       myservo.write(posCaneta);
-    
+      Serial.print('\n');
+      Serial.print(posCaneta);
+      return true;
+      break;
+      
+     case '[':
+      posCaneta = 0;
+      Serial.print('\n');
+      Serial.print(posCaneta);
+      myservo.write(posCaneta);
+      return true;
+      break;
+      
+     case '+':
+      posCaneta = posCaneta +1;
+        Serial.print('\n');
+      Serial.print(posCaneta);
+      myservo.write(posCaneta);  
+      return true;
+      break;
+
+      case '.':
+      posCaneta = 15;
+       Serial.print('\n');
+      Serial.print(posCaneta);
+      myservo.write(posCaneta);  
+      return true;
+      break;
       
   }
   return false;
@@ -349,8 +376,8 @@ void volta_posicao_inicial(){
     baixo(1);
     delay(0.5);
   }
-  posicaoAtual = -1;
-  
+  posicaoAtual = -1; 
+
 }
 
 void cima(int steps) {
@@ -484,7 +511,7 @@ void desceCaneta() {
 //Inicio x = 0,y=0
 void desenhaVelha() {
 
-  int delay_movimento_caneta = 0;
+  int delay_movimento_caneta = 100;
 
   sobeCaneta();
   cima(950);

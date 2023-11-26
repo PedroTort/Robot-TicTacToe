@@ -61,9 +61,10 @@ class Bot:
         weight = board.count_empty_positions() + 1
         multiplier = 1 if turn == 0 else -1
         evals = [[multiplier*weight,new_board[1]] if new_board[0].check_winner() == symbol else [0,new_board[1]] for new_board in possible_boards]
+        
     
         for index,tuple in enumerate(evals):
-            if tuple[0] == 0 and possible_boards[index][0].count_empty_positions()>0 and depth>0:
+            if tuple[0] == 0 and possible_boards[index][0].count_empty_positions()>0 and depth>=0:
                 tuple[0] = self.min_max(possible_boards[index][0],int(not turn),depth-1)[0]
 
 
@@ -79,6 +80,12 @@ class Bot:
                 value =  min(evals, key=lambda x: x[0])[0]
         
         values_tuples = [t for t in evals if t[0] == value]
+        
+        if self.level == 'Medio':
+            size = len(values_tuples)
+            for i in values_tuples:
+                i[0] += multiplier*0.01*size
+            
         return random.choice(values_tuples)
 
         

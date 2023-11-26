@@ -75,8 +75,7 @@ class LCDRasp:
 
     def espera_apertar_botao(self):
         while True:
-            entrada = GPIO.input(self.BUTTON_PIN_SELEC)
-            if entrada == GPIO.LOW:
+            if GPIO.input(self.BUTTON_PIN_SELEC) == GPIO.LOW or GPIO.input(self.BUTTON_PIN_CHANGE) == GPIO.LOW:
                 sleep(0.1)
                 break
 
@@ -156,19 +155,32 @@ class LCDRasp:
         self.lcd.text("", 2)
         #pause()
 
-    def mensagem_vencedor(self, vencedor):
+    def calculando_jogada_robo(self):
         signal(SIGTERM, LCDRasp.safe_exit)
         signal(SIGHUP, LCDRasp.safe_exit)
         self.lcd.clear()
-        self.lcd.text("Vencedor: ", 1 )
-        if vencedor ==1:
-            self.lcd.text("Jogador", 2)
-        elif vencedor ==2:
-            self.lcd.text("Robo", 2)
-        else:
-            self.lcd.text("Deu velha", 1)
+        self.lcd.text("Calculando prox", 1)
+        self.lcd.text("Jogada", 2)
         #pause()
 
+    def mensagem_jogar_novamente(self):
+        self.lcd.clear()
+        self.lcd.text("Apague tudo", 1)
+        self.lcd.text("e aperte algo!",2)
+        while True:
+            if GPIO.input(self.BUTTON_PIN_CHANGE) == GPIO.LOW or GPIO.input(self.BUTTON_PIN_SELEC) == GPIO.LOW:
+                self.lcd.text("Jogar novamente?", 1)
+                self.lcd.text(" Sim        Nao ", 2) # change = sim  selec = nao
+                while True:
+                    if GPIO.input(self.BUTTON_PIN_CHANGE) == GPIO.LOW: #Sim
+                        return True
+                    if GPIO.input(self.BUTTON_PIN_SELEC) == GPIO.LOW: #Nao
+                        self.lcd.clear()
+                        self.lcd.text("Jah eh", 1)
+                        sleep(3)
+                        self.lcd.clear()
+                        return False
+
     def mensagem_vencedor(self, vencedor):
         signal(SIGTERM, LCDRasp.safe_exit)
         signal(SIGHUP, LCDRasp.safe_exit)
@@ -180,26 +192,19 @@ class LCDRasp:
             self.lcd.text("Robo", 2)
         else:
             self.lcd.text("Deu velha", 1)
+        sleep(6) #6
+        return self.mensagem_jogar_novamente()
+
+
 
     def mensagem_redesenha_tabuleiro(self):
         signal(SIGTERM, LCDRasp.safe_exit)
         signal(SIGHUP, LCDRasp.safe_exit)
         self.lcd.clear()
-        self.lcd.text("Redesenha: ", 1 )
+        self.lcd.text("Aperte para", 1 )
+        self.lcd.text("Redesenhar", 2)
         while True:
-            entrada = GPIO.input(self.BUTTON_PIN_SELEC)
-            if entrada == GPIO.LOW:
-                sleep(0.1)
-                break
-
-    def mensagem_redesenha_tabuleiro(self):
-        signal(SIGTERM, LCDRasp.safe_exit)
-        signal(SIGHUP, LCDRasp.safe_exit)
-        self.lcd.clear()
-        self.lcd.text("Redesenha Tabu ", 1 )
-        while True:
-            entrada = GPIO.input(self.BUTTON_PIN_SELEC)
-            if entrada == GPIO.LOW:
+            if GPIO.input(self.BUTTON_PIN_SELEC) == GPIO.LOW or GPIO.input(self.BUTTON_PIN_CHANGE) == GPIO.LOW:
                 sleep(0.1)
                 break
 
@@ -213,5 +218,11 @@ class LCDRasp:
             if entrada == GPIO.LOW:
                 sleep(0.1)
                 break
+
+    def mensagem_jogada_invalida(self):
+        signal(SIGTERM, LCDRasp.safe_exit)
+        signal(SIGHUP, LCDRasp.safe_exit)
+        self.lcd.text("Jogada invalida", 1 )
+        self.lcd.text("Desenhe dnv", 2)
 #obj = LCDRasp()
 #obj.escolhe_dificuldade()
