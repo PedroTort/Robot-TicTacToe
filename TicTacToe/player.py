@@ -15,7 +15,7 @@ class Player:
         
     def cria_quadrados(self):
         self.imagem_tabuleiro_vazio = processa_tabuleiro_vazio(self.cap, self.tabuleiro_vazio, self.quadro_vazio)
-        cv2.imwrite("imagem_tabuleiro_vazio_processado.jpg", self.imagem_tabuleiro_vazio)
+        # cv2.imwrite("imagem_tabuleiro_vazio_processado.jpg", self.imagem_tabuleiro_vazio)
         try:
             self.lista_quadrados = encontra_quadrados(self.imagem_tabuleiro_vazio)
         except:
