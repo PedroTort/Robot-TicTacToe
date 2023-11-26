@@ -12,16 +12,32 @@ import numpy as np
 
 tamanho_medio_quadrados = 13383.775
 
+def tira_foto_quadro_vazio(cap):
+    img = capture_picture(cap)
+    cv2.imwrite("imagem_quadro_vazio.jpg", img)
+    # img_processada = process(img,np.ones((12,12)))
+    return img
+
 def tira_foto_tabuleiro_vazio(cap):
     img = capture_picture(cap)
     cv2.imwrite("imagem_tabuleiro_vazio.jpg", img)
-    img_processada = process(img,np.ones((12,12)))
+    # img_processada = process(img,np.ones((12,12)))
+    return img
+
+def processa_tabuleiro_vazio(cap):
+    # quadro = cv2.imread("imagem_quadro_vazio.jpg")
+    # tabuleiro = cv2.imread("imagem_tabuleiro_vazio.jpg")
+    quadro = tira_foto_quadro_vazio(cap)
+    tabuleiro = tira_foto_tabuleiro_vazio(cap)
+    sub = cv2.subtract(tabuleiro, quadro)
+    img_processada = process(sub,np.ones((12,12)))
+    cv2.imwrite("imagem_subtracao_processada.imgjpg", img_processada)
     return img_processada
 
 def calcula_area(vertices):
     vertices = np.array(vertices, dtype=np.int32)
     vertices = vertices.reshape((-1, 1, 2))
-    area = cv2.contourArea(vertices);
+    area = cv2.contourArea(vertices)
     return area
 
 def encontra_quadrados(imagem):

@@ -12,7 +12,7 @@ class Player:
         self.board = board
         
     def cria_quadrados(self):
-        self.imagem_tabuleiro_vazio = tira_foto_tabuleiro_vazio(self.cap)
+        self.imagem_tabuleiro_vazio = processa_tabuleiro_vazio(self.cap)
         cv2.imwrite("imagem_tabuleiro_vazio_processado.jpg", self.imagem_tabuleiro_vazio)
         try:
             self.lista_quadrados = encontra_quadrados(self.imagem_tabuleiro_vazio)
