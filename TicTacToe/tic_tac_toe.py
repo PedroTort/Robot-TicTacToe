@@ -166,13 +166,13 @@ if __name__ == '__main__':
     while True:
         simbolo = lcd.escolhe_simbolo()
         dificuldade = lcd.escolhe_dificuldade()
-
+        quadro_vazio = tira_foto_quadro_vazio(cap)
         lcd.mensagem_desenhando_tabuleiro()
         while True:
             arduino.desenha_jogo_da_velha()
-
+            tabuleiro_vazio = tira_foto_tabuleiro_vazio(cap)
             if simbolo == 'X':
-                player1 = Player(cap, 'x')
+                player1 = Player(tabuleiro_vazio, quadro_vazio, cap, 'x')
                 player2 = Bot(arduino,symbol = 'o',level = dificuldade)
                 ttc = tic_tac_toe(player1,player2,lcd)
                 player1.set_board(ttc.get_board())
@@ -184,7 +184,7 @@ if __name__ == '__main__':
                     enquadramento_tabuleiro_boa = player1.testa_enquadramento_tabuleiro()
             else:    
                 player1 = Bot(arduino,symbol = 'x',level = dificuldade)
-                player2 = Player(cap, 'o')
+                player2 = Player(tabuleiro_vazio, quadro_vazio,cap, 'o')
                 ttc = tic_tac_toe(player1,player2,lcd)
                 player1.set_board(ttc.get_board())
                 player2.set_board(ttc.get_board())

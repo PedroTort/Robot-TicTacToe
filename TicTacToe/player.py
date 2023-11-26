@@ -2,17 +2,19 @@ import time
 from funcoes_aux import *
 
 class Player:
-    def __init__(self, cap, symbol = 'x'):
+    def __init__(self,tabuleiro_vazio, quadro_vazio, cap, symbol = 'x'):
         self.player_class = 'player'
         self.symbol = symbol
         self.lista_quadrados = None
         self.cap = cap
+        self.tabuleiro_vazio = tabuleiro_vazio
+        self.quadro_vazio = quadro_vazio
 
     def set_board(self,board):
         self.board = board
         
     def cria_quadrados(self):
-        self.imagem_tabuleiro_vazio = processa_tabuleiro_vazio(self.cap)
+        self.imagem_tabuleiro_vazio = processa_tabuleiro_vazio(self.cap, self.tabuleiro_vazio, self.quadro_vazio)
         cv2.imwrite("imagem_tabuleiro_vazio_processado.jpg", self.imagem_tabuleiro_vazio)
         try:
             self.lista_quadrados = encontra_quadrados(self.imagem_tabuleiro_vazio)

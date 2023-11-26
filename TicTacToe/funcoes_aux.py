@@ -24,14 +24,12 @@ def tira_foto_tabuleiro_vazio(cap):
     # img_processada = process(img,np.ones((12,12)))
     return img
 
-def processa_tabuleiro_vazio(cap):
+def processa_tabuleiro_vazio(cap,tabuleiro_vazio, quadro_vazio):
     # quadro = cv2.imread("imagem_quadro_vazio.jpg")
     # tabuleiro = cv2.imread("imagem_tabuleiro_vazio.jpg")
-    quadro = tira_foto_quadro_vazio(cap)
-    tabuleiro = tira_foto_tabuleiro_vazio(cap)
-    sub = cv2.subtract(tabuleiro, quadro)
+    sub = cv2.subtract(tabuleiro_vazio, quadro_vazio)
     img_processada = process(sub,np.ones((12,12)))
-    cv2.imwrite("imagem_subtracao_processada.imgjpg", img_processada)
+    cv2.imwrite("imagem_subtracao_processada.jpg", img_processada)
     return img_processada
 
 def calcula_area(vertices):
