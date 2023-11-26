@@ -10,8 +10,8 @@ class Bot:
         self.primeira_jogada = True
                 
         self.dict_level_depth = {
-            'Facil': None,
-            'Medio':1,
+            'Facil': 15,
+            'Medio':2,
             'Dificil': 15
         }
         self.level = level
@@ -63,8 +63,9 @@ class Bot:
         evals = [[multiplier*weight,new_board[1]] if new_board[0].check_winner() == symbol else [0,new_board[1]] for new_board in possible_boards]
     
         for index,tuple in enumerate(evals):
-            if tuple[0] == 0 and possible_boards[index][0].count_empty_positions()>0:
-                tuple[0] = self.min_max(possible_boards[index][0],int(not turn),depth)[0]
+            if tuple[0] == 0 and possible_boards[index][0].count_empty_positions()>0 and depth>0:
+                tuple[0] = self.min_max(possible_boards[index][0],int(not turn),depth-1)[0]
+
 
         if turn == 0:
             if self.level == 'Facil':
