@@ -20,10 +20,10 @@ int posDireita = 0;
 #define Y_STP 3
 
 //Fim de curso X
-#define PIN_FIM_DE_CURSO_X 10
+#define PIN_FIM_DE_CURSO_X 9
 
 //Fim de curso Y
-#define PIN_FIM_DE_CURSO_Y 9
+#define PIN_FIM_DE_CURSO_Y 10
 
 //Servo motor
 #define PIN_SERVO_MOTOR 11

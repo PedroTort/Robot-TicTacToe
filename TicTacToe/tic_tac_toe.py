@@ -111,7 +111,7 @@ class Board:
         return boards
     
 class tic_tac_toe:
-    def __init__(self,player1,player2,lcd:LCDRasp_sim):
+    def __init__(self,player1,player2,lcd:LCDRasp):
         self.lcd = lcd
         self.player1 = player1
         self.player2 = player2
@@ -127,14 +127,14 @@ class tic_tac_toe:
     def get_board(self):
         return self.board
 
-    def play(self, cap):
+    def play(self, ):
         while True:
 
             self.print_message_p1()
-            positionX = self.player1.play(cap) 
+            positionX = self.player1.play() 
 
             while not self.board.check_valid_play(positionX):
-                positionX = self.player1.play(cap)
+                positionX = self.player1.play()
 
             self.board.set_symbol_at_position(positionX,'x')
             self.board.print_board()
@@ -158,7 +158,7 @@ class tic_tac_toe:
                 return 'o'
 
 if __name__ == '__main__':
-    cam_port = 2
+    cam_port = 0
     cap = cv2.VideoCapture(cam_port)
     arduino = Arduino()
     lcd = LCDRasp()
