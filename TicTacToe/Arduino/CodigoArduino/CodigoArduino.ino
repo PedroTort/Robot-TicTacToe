@@ -164,7 +164,56 @@ bool recebeExecutaComando(){
       myservo.write(posCaneta);  
       return true;
       break;
-      
+
+      case 'q':
+      sobeCaneta();
+      return true;
+      break;
+
+      case 'w':
+      desceCaneta();
+      return true;
+      break;
+
+      case 'e':
+      direita(100);
+      return true;
+      break;
+
+      case 'f':
+      esquerda(100);
+      return true;
+      break;
+
+      case 'g':
+      cima(100);
+      return true;
+      break;
+
+      case 'h':
+      baixo(100);
+      return true;
+      break;
+
+      case 'j':
+      diagonalCimaDireita(100);
+      return true;
+      break;
+
+      case 'k':
+      diagonalBaixoEsquerda(100);
+      return true;
+      break;
+
+      case 'l':
+      diagonalCimaEsquerda(100);
+      return true;
+      break;
+
+      case 'm':
+      diagonalBaixoDireita(100);
+      return true;
+      break;
   }
   return false;
 }

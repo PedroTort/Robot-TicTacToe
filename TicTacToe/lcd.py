@@ -99,6 +99,7 @@ class LCDRasp:
                 entrada_2 = GPIO.input(self.BUTTON_PIN_SELEC)
                 if entrada == GPIO.LOW:
                     escolha = 'Medio'
+                    sleep(0.1)
                 if entrada_2 == GPIO.LOW:
                     confirma = False
                 #if input() == 's':
@@ -114,6 +115,7 @@ class LCDRasp:
                 entrada_2 = GPIO.input(self.BUTTON_PIN_SELEC)
                 if entrada == GPIO.LOW:
                     escolha = 'Dificil'
+                    sleep(0.1)
                 if entrada_2 == GPIO.LOW:
                     confirma = False
 
@@ -123,6 +125,7 @@ class LCDRasp:
                 entrada_2 = GPIO.input(self.BUTTON_PIN_SELEC)
                 if entrada == GPIO.LOW:
                     escolha = 'Facil'
+                    sleep(0.1)
                 if entrada_2 == GPIO.LOW:
                     confirma = False
 
@@ -169,6 +172,7 @@ class LCDRasp:
         self.lcd.text("e aperte algo!",2)
         while True:
             if GPIO.input(self.BUTTON_PIN_CHANGE) == GPIO.LOW or GPIO.input(self.BUTTON_PIN_SELEC) == GPIO.LOW:
+                sleep(0.2)
                 self.lcd.text("Jogar novamente?", 1)
                 self.lcd.text(" Sim        Nao ", 2) # change = sim  selec = nao
                 while True:
@@ -176,7 +180,7 @@ class LCDRasp:
                         return True
                     if GPIO.input(self.BUTTON_PIN_SELEC) == GPIO.LOW: #Nao
                         self.lcd.clear()
-                        self.lcd.text("Jah eh", 1)
+                        self.lcd.text("Tchau tchau", 1)
                         sleep(3)
                         self.lcd.clear()
                         return False
