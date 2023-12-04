@@ -36,7 +36,7 @@ class Bot:
     def play(self):
         if self.primeira_jogada and self.symbol == 'x':
             self.primeira_jogada = False
-            position2D = random.choice(list(self.board_mapping_2D_to_1D.keys()))
+            position2D = self.first_move()
         else:
             self.primeira_jogada = False
             position2D = self.min_max(self.board,0,self.depth)[1]
@@ -51,7 +51,14 @@ class Bot:
         self.board.set_symbol_at_position(position2D,' ')
         self.arduino.volta_posicao_inicial()
         return position2D
-
+    
+    def first_move(self):
+        if self.level == 'Facil':
+            return random.choice(['0,1','1,0','1,2','2,1'])
+        elif self.level == 'Medio':
+            return random.choice(list(self.board_mapping_2D_to_1D.keys()))
+        elif self.level == 'Dificil':
+            return random.choice(['0,0','0,2','1,1','2,0','2,2'])
     #turn = 0 -> bot`s turn
     #turn = 1 -> player`s turn
     def min_max(self,board,turn,depth):
@@ -62,11 +69,14 @@ class Bot:
         multiplier = 1 if turn == 0 else -1
         evals = [[multiplier*weight,new_board[1]] if new_board[0].check_winner() == symbol else [0,new_board[1]] for new_board in possible_boards]
         
-    
-        for index,tuple in enumerate(evals):
-            if tuple[0] == 0 and possible_boards[index][0].count_empty_positions()>0 and depth>=0:
-                tuple[0] = self.min_max(possible_boards[index][0],int(not turn),depth-1)[0]
-
+        if self.level != 'Facil' and turn == 0 and max(evals, key=lambda x: x[0])[0] >= 1:
+            pass
+        elif self.level == 'Facil' and turn == 1 and min(evals, key=lambda x: x[0])[0] <= -1:
+            pass
+        else:
+            for index,tuple in enumerate(evals):
+                if tuple[0] == 0 and possible_boards[index][0].count_empty_positions()>0 and depth>=0:
+                    tuple[0] = self.min_max(possible_boards[index][0],int(not turn),depth-1)[0]
 
         if turn == 0:
             if self.level == 'Facil':
@@ -74,18 +84,16 @@ class Bot:
             else:
                 value =  max(evals, key=lambda x: x[0])[0]
         else:
-            if self.level == 'Facil':
-                value =  max(evals, key=lambda x: x[0])[0]
-            else:
-                value =  min(evals, key=lambda x: x[0])[0]
+            #if self.level == 'Facil':
+            #    value =  max(evals, key=lambda x: x[0])[0]
+            #else:
+            value =  min(evals, key=lambda x: x[0])[0]
         
         values_tuples = [t for t in evals if t[0] == value]
         
-        if self.level == 'Medio':
-            size = len(values_tuples)
-            for i in values_tuples:
-                i[0] += multiplier*0.01*size
-            
+        size = len(values_tuples)
+        for i in values_tuples:
+            i[0] += multiplier*0.01*size
+        
         return random.choice(values_tuples)
-
         
